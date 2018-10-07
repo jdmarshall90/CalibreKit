@@ -1,1 +1,2 @@
 git "git@gitlab.com:jdmarshall90libs/SwiftLintConfig.git" "v3.1.1"
+github "Alamofire/Alamofire" "4.7.3"

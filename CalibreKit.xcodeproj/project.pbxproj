@@ -11,6 +11,7 @@
 		D0487183216A975C0085D22C /* CalibreKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0487182216A975C0085D22C /* CalibreKitTests.swift */; };
 		D0487185216A975C0085D22C /* CalibreKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D0487177216A975C0085D22C /* CalibreKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D048718F216A97C30085D22C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048718E216A97C30085D22C /* Endpoint.swift */; };
+		D0487193216A9DA90085D22C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0487192216A9DA90085D22C /* Alamofire.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		D0487182216A975C0085D22C /* CalibreKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreKitTests.swift; sourceTree = "<group>"; };
 		D0487184216A975C0085D22C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D048718E216A97C30085D22C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		D0487192216A9DA90085D22C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0487193216A9DA90085D22C /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +60,7 @@
 			children = (
 				D0487176216A975C0085D22C /* CalibreKit */,
 				D0487181216A975C0085D22C /* CalibreKitTests */,
+				D0487191216A9D9B0085D22C /* Frameworks */,
 				D0487175216A975C0085D22C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,6 +91,14 @@
 				D0487184216A975C0085D22C /* Info.plist */,
 			);
 			path = CalibreKitTests;
+			sourceTree = "<group>";
+		};
+		D0487191216A9D9B0085D22C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D0487192216A9DA90085D22C /* Alamofire.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
