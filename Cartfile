@@ -1,0 +1,2 @@
+git "git@gitlab.com:jdmarshall90libs/SwiftLintConfig.git" ~> 3.0.0
+

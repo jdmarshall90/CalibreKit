@@ -10,6 +10,7 @@
 		D048717E216A975C0085D22C /* CalibreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0487174216A975C0085D22C /* CalibreKit.framework */; };
 		D0487183216A975C0085D22C /* CalibreKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0487182216A975C0085D22C /* CalibreKitTests.swift */; };
 		D0487185216A975C0085D22C /* CalibreKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D0487177216A975C0085D22C /* CalibreKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D048718F216A97C30085D22C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048718E216A97C30085D22C /* Endpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		D048717D216A975C0085D22C /* CalibreKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalibreKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0487182216A975C0085D22C /* CalibreKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreKitTests.swift; sourceTree = "<group>"; };
 		D0487184216A975C0085D22C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D048718E216A97C30085D22C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				D0487177216A975C0085D22C /* CalibreKit.h */,
+				D048718E216A97C30085D22C /* Endpoint.swift */,
 				D0487178216A975C0085D22C /* Info.plist */,
 			);
 			path = CalibreKit;
@@ -108,6 +111,7 @@
 				D0487170216A975C0085D22C /* Sources */,
 				D0487171216A975C0085D22C /* Frameworks */,
 				D0487172216A975C0085D22C /* Resources */,
+				D0487190216A981F0085D22C /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -148,6 +152,7 @@
 				TargetAttributes = {
 					D0487173216A975C0085D22C = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
 					};
 					D048717C216A975C0085D22C = {
 						CreatedOnToolsVersion = 10.0;
@@ -189,11 +194,33 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D0487190216A981F0085D22C /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which /usr/local/bin/swiftlint >/dev/null; then\n    /usr/local/bin/swiftlint lint --config \"Carthage/Checkouts/SwiftLintConfig/.swiftlint.yml\" --no-cache\nelse\n    echo \"error: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    return 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D0487170216A975C0085D22C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D048718F216A97C30085D22C /* Endpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +368,7 @@
 		D0487189216A975C0085D22C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -358,6 +386,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.marshall.justin.lib.CalibreKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -366,6 +395,7 @@
 		D048718A216A975C0085D22C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -391,6 +421,7 @@
 		D048718C216A975C0085D22C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6CRFEU9SAX;
 				INFOPLIST_FILE = CalibreKitTests/Info.plist;
@@ -409,6 +440,7 @@
 		D048718D216A975C0085D22C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6CRFEU9SAX;
 				INFOPLIST_FILE = CalibreKitTests/Info.plist;

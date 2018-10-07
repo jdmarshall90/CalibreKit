@@ -6,16 +6,18 @@
 //  Copyright © 2018 Justin Marshall. All rights reserved.
 //
 
-import XCTest
 @testable import CalibreKit
+import XCTest
 
 class CalibreKitTests: XCTestCase {
 
     override func setUp() {
+        super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDown() {
+        super.tearDown()
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
