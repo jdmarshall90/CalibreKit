@@ -15,26 +15,36 @@ internal struct CalibreKitConfiguration {
     internal static var baseURL: URL = URL(string: "http://localhost:8080")!
 }
 
-extension String: Error {}
+internal enum CalibreError: Error {
+    // TODO: This will need enhanced
+    // swiftlint:disable:next identifier_name
+    case message(String)
+}
 
-internal typealias CalibreResponse = Decodable
+// copied from: https://github.com/Alamofire/Alamofire/blob/master/Documentation/AdvancedUsage.md#generic-response-object-serialization
+internal protocol ResponseObjectSerializable {
+    init?(response: HTTPURLResponse, representation: Any)
+}
 
 internal extension DataRequest {
     @discardableResult
-    internal func responseCalibre<T: CalibreResponse>(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
+    internal func responseCalibre<T: ResponseObjectSerializable>(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
         let responseSerializer = DataResponseSerializer<T> { request, response, data, error in
             guard error == nil else { return .failure(error!) }
             
-            guard let data = data else {
-                return .failure("No data back")
+            let jsonResponseSerializer = DataRequest.jsonResponseSerializer(options: .allowFragments)
+            let result = jsonResponseSerializer.serializeResponse(request, response, data, nil)
+            
+            guard case let .success(jsonObject) = result else {
+                return .failure(result.error!)
             }
             
-            do {
-                let calibreResponse = try JSONDecoder().decode(T.self, from: data)
-                return .success(calibreResponse)
-            } catch {
-                return .failure(error)
+            guard let response = response,
+                let responseObject = T(response: response, representation: jsonObject) else {
+                return .failure(CalibreError.message("JSON could not be serialized: \(jsonObject)"))
             }
+            
+            return .success(responseObject)
         }
         
         return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
@@ -42,14 +52,14 @@ internal extension DataRequest {
 }
 
 internal protocol Endpoint {
-    associatedtype ParsedResponse: CalibreResponse
+    associatedtype ParsedResponse: ResponseObjectSerializable
     
     var absoluteURL: URL { get }
     var method: HTTPMethod { get }
     var relativeURL: URL { get }
     var responseType: ParsedResponse.Type { get }
     
-    func hitService(completion: @escaping (Result<ParsedResponse>) -> Void)
+    func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void)
 }
 
 internal extension Endpoint {
@@ -61,16 +71,36 @@ internal extension Endpoint {
         return ParsedResponse.self
     }
     
-    internal func hitService(completion: @escaping (Result<ParsedResponse>) -> Void) {
-        let booksRequest = request(absoluteURL, method: method, parameters: nil)
-        booksRequest.responseCalibre { (response: DataResponse<ParsedResponse>) in
-            completion(response.result)
-        }
+    internal func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void) {
+        request(absoluteURL, method: method, parameters: nil).responseCalibre(completionHandler: completion)
     }
 }
 
-internal struct BooksResponse: CalibreResponse {
-    internal let title: String
+internal struct BooksResponse: ResponseObjectSerializable {
+    
+    internal let books: [Book]
+    
+    internal struct Book: ResponseObjectSerializable, Decodable {
+        internal let title: String
+        
+        internal init?(response: HTTPURLResponse, representation: Any) {
+            guard let representation = representation as? [String: Any],
+                let title = representation["title"] as? String else {
+                    return nil
+            }
+            
+            self.title = title
+        }
+    }
+    
+    internal init?(response: HTTPURLResponse, representation: Any) {
+        guard let representation = representation as? [String: Any] else {
+            return nil
+        }
+        
+        self.books = representation.values.map { Book(response: response, representation: $0) }.compactMap { $0 }
+    }
+    
     /*
 {
     "1": {
@@ -203,7 +233,7 @@ internal struct BooksResponse: CalibreResponse {
 }
 
 internal struct BooksEndpoint: Endpoint {
-    internal typealias ParsedResponse = [BooksResponse]
+    internal typealias ParsedResponse = BooksResponse
     internal let method: HTTPMethod = .get
     internal let relativeURL = URL(string: "/ajax/books/")!
 }
