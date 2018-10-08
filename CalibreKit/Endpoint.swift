@@ -11,6 +11,8 @@ import Foundation
 
 // swiftlint:disable force_unwrapping
 
+// TODO: Organize the stuff in this file out into separate files
+
 public struct CalibreKitConfiguration {
     public static var baseURL: URL = URL(string: "http://localhost:8080")!
 }
