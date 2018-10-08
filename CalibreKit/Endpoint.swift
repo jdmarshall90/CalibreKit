@@ -11,8 +11,8 @@ import Foundation
 
 // swiftlint:disable force_unwrapping
 
-internal struct CalibreKitConfiguration {
-    internal static var baseURL: URL = URL(string: "http://localhost:8080")!
+public struct CalibreKitConfiguration {
+    public static var baseURL: URL = URL(string: "http://localhost:8080")!
 }
 
 internal enum CalibreError: Error {
@@ -22,7 +22,7 @@ internal enum CalibreError: Error {
 }
 
 // copied from: https://github.com/Alamofire/Alamofire/blob/master/Documentation/AdvancedUsage.md#generic-response-object-serialization
-internal protocol ResponseObjectSerializable {
+public protocol ResponseObjectSerializable {
     init?(response: HTTPURLResponse, representation: Any)
 }
 
@@ -51,39 +51,39 @@ internal extension DataRequest {
     }
 }
 
-internal protocol Endpoint {
+public protocol Endpoint {
     associatedtype ParsedResponse: ResponseObjectSerializable
     
     var absoluteURL: URL { get }
     var method: HTTPMethod { get }
-    var relativeURL: URL { get }
+    var relativePath: String { get }
     var responseType: ParsedResponse.Type { get }
     
     func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void)
 }
 
-internal extension Endpoint {
-    internal var absoluteURL: URL {
-        return URL(string: relativeURL.absoluteString, relativeTo: CalibreKitConfiguration.baseURL)!
+public extension Endpoint {
+    public var absoluteURL: URL {
+        return URL(string: relativePath, relativeTo: CalibreKitConfiguration.baseURL)!
     }
     
-    internal var responseType: ParsedResponse.Type {
+    public var responseType: ParsedResponse.Type {
         return ParsedResponse.self
     }
     
-    internal func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void) {
+    public func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void) {
         request(absoluteURL, method: method, parameters: nil).responseCalibre(completionHandler: completion)
     }
 }
 
-internal struct BooksResponse: ResponseObjectSerializable {
+public struct BooksResponse: ResponseObjectSerializable {
     
-    internal let books: [Book]
+    public let books: [Book]
     
-    internal struct Book: ResponseObjectSerializable, Decodable {
-        internal let title: String
+    public struct Book: ResponseObjectSerializable, Decodable {
+        public let title: String
         
-        internal init?(response: HTTPURLResponse, representation: Any) {
+        public init?(response: HTTPURLResponse, representation: Any) {
             guard let representation = representation as? [String: Any],
                 let title = representation["title"] as? String else {
                     return nil
@@ -93,7 +93,7 @@ internal struct BooksResponse: ResponseObjectSerializable {
         }
     }
     
-    internal init?(response: HTTPURLResponse, representation: Any) {
+    public init?(response: HTTPURLResponse, representation: Any) {
         guard let representation = representation as? [String: Any] else {
             return nil
         }
@@ -232,8 +232,10 @@ internal struct BooksResponse: ResponseObjectSerializable {
  */
 }
 
-internal struct BooksEndpoint: Endpoint {
-    internal typealias ParsedResponse = BooksResponse
-    internal let method: HTTPMethod = .get
-    internal let relativeURL = URL(string: "/ajax/books/")!
+public struct BooksEndpoint: Endpoint {
+    public typealias ParsedResponse = BooksResponse
+    public let method: HTTPMethod = .get
+    public let relativePath = "/ajax/books/"
+    
+    public init() {}
 }
