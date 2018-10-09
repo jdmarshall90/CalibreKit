@@ -15,7 +15,6 @@ public protocol Endpoint {
     var absoluteURL: URL { get }
     var method: HTTPMethod { get }
     var relativePath: String { get }
-    var responseType: ParsedResponse.Type { get }
     
     func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void)
     func transform(responseData: Data) throws -> Result<ParsedResponse>
@@ -25,10 +24,6 @@ public extension Endpoint {
     public var absoluteURL: URL {
         // swiftlint:disable:next force_unwrapping
         return URL(string: relativePath, relativeTo: CalibreKitConfiguration.baseURL)!
-    }
-    
-    public var responseType: ParsedResponse.Type {
-        return ParsedResponse.self
     }
     
     public func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void) {
