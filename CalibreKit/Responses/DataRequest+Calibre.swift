@@ -12,28 +12,16 @@ import Foundation
 // modified from: https://github.com/Alamofire/Alamofire/blob/master/Documentation/AdvancedUsage.md#generic-response-object-serialization
 internal extension DataRequest {
     @discardableResult
-    internal func responseCalibre<T: ResponseObjectSerializable>(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
+    internal func responseCalibre<T: ResponseSerializable>(queue: DispatchQueue? = nil, transform: @escaping ((Data) throws -> Result<T>), completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
         let responseSerializer = DataResponseSerializer<T> { request, response, data, error in
             // swiftlint:disable:next force_unwrapping
             guard error == nil else { return .failure(error!) }
             
-            let jsonResponseSerializer = DataRequest.jsonResponseSerializer(options: .allowFragments)
-            let result = jsonResponseSerializer.serializeResponse(request, response, data, nil)
+            guard let data = data else { return .failure(CalibreError.message("No response data")) }
             
-            switch result {
-            case .success(let rawJSON):
-                do {
-                    guard let json = rawJSON as? [String: [String: Any]] else {
-                        return .failure(CalibreError.message("Unexpected response type: \(type(of: rawJSON))"))
-                    }
-                    
-                    let responseObject = try T(representation: json)
-                    return .success(responseObject)
-                } catch {
-                    return .failure(CalibreError.message("JSON could not be serialized: \(error)"))
-                }
-                
-            case .failure(let error):
+            do {
+                return try transform(data)
+            } catch {
                 return .failure(error)
             }
         }

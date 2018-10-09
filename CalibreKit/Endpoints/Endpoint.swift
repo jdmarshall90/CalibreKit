@@ -10,7 +10,7 @@ import Alamofire
 import Foundation
 
 public protocol Endpoint {
-    associatedtype ParsedResponse: ResponseObjectSerializable
+    associatedtype ParsedResponse: ResponseSerializable
     
     var absoluteURL: URL { get }
     var method: HTTPMethod { get }
@@ -18,6 +18,7 @@ public protocol Endpoint {
     var responseType: ParsedResponse.Type { get }
     
     func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void)
+    func transform(responseData: Data) throws -> Result<ParsedResponse>
 }
 
 public extension Endpoint {
@@ -31,6 +32,16 @@ public extension Endpoint {
     }
     
     public func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void) {
-        request(absoluteURL, method: method, parameters: nil).responseCalibre(completionHandler: completion)
+        request(absoluteURL, method: method, parameters: nil).responseCalibre(transform: transform, completionHandler: completion)
     }
+    
+    public func transform(responseData: Data) throws -> Result<ParsedResponse> {
+        do {
+            let parsedResponse = try JSONDecoder().decode(ParsedResponse.self, from: responseData)
+            return .success(parsedResponse)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
 }

@@ -12,10 +12,10 @@
 		D0487185216A975C0085D22C /* CalibreKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D0487177216A975C0085D22C /* CalibreKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D048718F216A97C30085D22C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048718E216A97C30085D22C /* Endpoint.swift */; };
 		D0487193216A9DA90085D22C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0487192216A9DA90085D22C /* Alamofire.framework */; };
-		D0B475FB216C3AA6008FDA50 /* ResponseObjectSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FA216C3AA6008FDA50 /* ResponseObjectSerializable.swift */; };
+		D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */; };
 		D0B475FD216C3AC4008FDA50 /* DataRequest+Calibre.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */; };
 		D0B475FF216C3AF8008FDA50 /* BooksEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FE216C3AF8008FDA50 /* BooksEndpoint.swift */; };
-		D0B47601216C3B37008FDA50 /* BooksResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47600216C3B37008FDA50 /* BooksResponse.swift */; };
+		D0B47601216C3B37008FDA50 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47600216C3B37008FDA50 /* Book.swift */; };
 		D0B47603216C3B5E008FDA50 /* CalibreKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */; };
 		D0B47605216C3B6F008FDA50 /* CalibreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47604216C3B6F008FDA50 /* CalibreError.swift */; };
 /* End PBXBuildFile section */
@@ -39,10 +39,10 @@
 		D0487184216A975C0085D22C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D048718E216A97C30085D22C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		D0487192216A9DA90085D22C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0B475FA216C3AA6008FDA50 /* ResponseObjectSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseObjectSerializable.swift; sourceTree = "<group>"; };
+		D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializable.swift; sourceTree = "<group>"; };
 		D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRequest+Calibre.swift"; sourceTree = "<group>"; };
 		D0B475FE216C3AF8008FDA50 /* BooksEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksEndpoint.swift; sourceTree = "<group>"; };
-		D0B47600216C3B37008FDA50 /* BooksResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksResponse.swift; sourceTree = "<group>"; };
+		D0B47600216C3B37008FDA50 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreKitConfiguration.swift; sourceTree = "<group>"; };
 		D0B47604216C3B6F008FDA50 /* CalibreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreError.swift; sourceTree = "<group>"; };
 		D0B47606216C446C008FDA50 /* example.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = example.json; sourceTree = "<group>"; };
@@ -129,10 +129,10 @@
 		D0B475F9216C36D0008FDA50 /* Responses */ = {
 			isa = PBXGroup;
 			children = (
-				D0B47600216C3B37008FDA50 /* BooksResponse.swift */,
-				D0B47606216C446C008FDA50 /* example.json */,
+				D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */,
 				D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */,
-				D0B475FA216C3AA6008FDA50 /* ResponseObjectSerializable.swift */,
+				D0B47600216C3B37008FDA50 /* Book.swift */,
+				D0B47606216C446C008FDA50 /* example.json */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -270,10 +270,10 @@
 			files = (
 				D0B47603216C3B5E008FDA50 /* CalibreKitConfiguration.swift in Sources */,
 				D0B47605216C3B6F008FDA50 /* CalibreError.swift in Sources */,
-				D0B475FB216C3AA6008FDA50 /* ResponseObjectSerializable.swift in Sources */,
+				D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */,
 				D0B475FF216C3AF8008FDA50 /* BooksEndpoint.swift in Sources */,
 				D048718F216A97C30085D22C /* Endpoint.swift in Sources */,
-				D0B47601216C3B37008FDA50 /* BooksResponse.swift in Sources */,
+				D0B47601216C3B37008FDA50 /* Book.swift in Sources */,
 				D0B475FD216C3AC4008FDA50 /* DataRequest+Calibre.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
