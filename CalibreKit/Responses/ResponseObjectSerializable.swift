@@ -8,7 +8,7 @@
 
 import Foundation
 
-// copied from: https://github.com/Alamofire/Alamofire/blob/master/Documentation/AdvancedUsage.md#generic-response-object-serialization
+// modified from: https://github.com/Alamofire/Alamofire/blob/master/Documentation/AdvancedUsage.md#generic-response-object-serialization
 public protocol ResponseObjectSerializable {
-    init?(response: HTTPURLResponse, representation: Any)
+    init(representation: [String: [String: Any]]) throws
 }
