@@ -16,11 +16,10 @@ public struct BooksEndpoint: Endpoint {
     
     public init() {}
     
-    public func transform(responseData: Data) throws -> Result<[Book]> {
-        // TODO: throwing AND returning a Result type seems ... odd. Revisit this
+    public func transform(responseData: Data) throws -> [Book] {
         let booksRawJSON = try JSONSerialization.jsonObject(with: responseData, options: .allowFragments)
         guard let booksJSON = booksRawJSON as? [String: [String: Any]] else {
-            return .failure(CalibreError.message("Unexpected response type: \(type(of: booksRawJSON))"))
+            throw CalibreError.message("Unexpected response type: \(type(of: booksRawJSON))")
         }
         
         let booksData: [Data] = try booksJSON.values.map { bookJSON in
@@ -28,6 +27,6 @@ public struct BooksEndpoint: Endpoint {
             return try JSONSerialization.data(withJSONObject: bookJSON, options: .prettyPrinted)
         }
         let books = try booksData.map { try JSONDecoder().decode(Book.self, from: $0) }
-        return .success(books)
+        return books
     }
 }

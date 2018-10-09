@@ -17,7 +17,7 @@ public protocol Endpoint {
     var relativePath: String { get }
     
     func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void)
-    func transform(responseData: Data) throws -> Result<ParsedResponse>
+    func transform(responseData: Data) throws -> ParsedResponse
 }
 
 public extension Endpoint {
@@ -30,13 +30,9 @@ public extension Endpoint {
         request(absoluteURL, method: method, parameters: nil).responseCalibre(transform: transform, completionHandler: completion)
     }
     
-    public func transform(responseData: Data) throws -> Result<ParsedResponse> {
-        do {
-            let parsedResponse = try JSONDecoder().decode(ParsedResponse.self, from: responseData)
-            return .success(parsedResponse)
-        } catch {
-            return .failure(error)
-        }
+    public func transform(responseData: Data) throws -> ParsedResponse {
+        let parsedResponse = try JSONDecoder().decode(ParsedResponse.self, from: responseData)
+        return parsedResponse
     }
     
 }
