@@ -45,6 +45,7 @@
 		D0B47600216C3B37008FDA50 /* BooksResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksResponse.swift; sourceTree = "<group>"; };
 		D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreKitConfiguration.swift; sourceTree = "<group>"; };
 		D0B47604216C3B6F008FDA50 /* CalibreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreError.swift; sourceTree = "<group>"; };
+		D0B47606216C446C008FDA50 /* example.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = example.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,8 +130,9 @@
 			isa = PBXGroup;
 			children = (
 				D0B47600216C3B37008FDA50 /* BooksResponse.swift */,
-				D0B475FA216C3AA6008FDA50 /* ResponseObjectSerializable.swift */,
+				D0B47606216C446C008FDA50 /* example.json */,
 				D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */,
+				D0B475FA216C3AA6008FDA50 /* ResponseObjectSerializable.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
