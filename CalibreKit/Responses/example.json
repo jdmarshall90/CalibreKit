@@ -14,11 +14,15 @@
         "authors": {
             "Stephen King": "/ajax/books_in/617574686f7273/32/Calibre_Library"
         },
-        "languages": {},
+        "languages": {
+            
+        },
         "publisher": {
             "Doubleday": "/ajax/books_in/7075626c6973686572/31/Calibre_Library"
         },
-        "series": {},
+        "series": {
+            
+        },
         "tags": {
             "Fiction": "/ajax/books_in/74616773/31/Calibre_Library",
             "Horror": "/ajax/books_in/74616773/32/Calibre_Library",

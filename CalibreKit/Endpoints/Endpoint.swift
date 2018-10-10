@@ -34,5 +34,4 @@ public extension Endpoint {
         let parsedResponse = try JSONDecoder().decode(ParsedResponse.self, from: responseData)
         return parsedResponse
     }
-    
 }
