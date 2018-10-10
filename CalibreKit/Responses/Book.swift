@@ -40,7 +40,7 @@ public struct Book: ResponseSerializable {
     
     public struct Author {
         public let name: String
-        public let sortName: String
+        public let sort: String
     }
     
     public struct Identifier {
@@ -49,8 +49,8 @@ public struct Book: ResponseSerializable {
     }
     
     public struct Title {
-        public let title: String
-        public let sortTitle: String
+        public let name: String
+        public let sort: String
     }
     
     private static let dateFormatter: ISO8601DateFormatter = {
@@ -66,7 +66,7 @@ public struct Book: ResponseSerializable {
         
         let rawAuthors = try container.decode([String].self, forKey: .authors)
         let rawAuthorSortMap = try container.decode([String: String].self, forKey: .authorSortMap)
-        self.authors = rawAuthors.map { Author(name: $0, sortName: rawAuthorSortMap[$0] ?? $0) }
+        self.authors = rawAuthors.map { Author(name: $0, sort: rawAuthorSortMap[$0] ?? $0) }
         
         self.comments = try container.decode(Optional<String>.self, forKey: .comments)
         self.cover = try container.decode(CoverEndpoint.self, forKey: .cover)
@@ -86,7 +86,7 @@ public struct Book: ResponseSerializable {
         
         let rawTitle = try container.decode(String.self, forKey: .title)
         let rawTitleSort = try container.decode(String.self, forKey: .titleSort)
-        self.title = Title(title: rawTitle, sortTitle: rawTitleSort)
+        self.title = Title(name: rawTitle, sort: rawTitleSort)
         
         self.thumbnail = try container.decode(ThumbnailEndpoint.self, forKey: .thumbnail)
     }
