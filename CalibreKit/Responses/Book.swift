@@ -32,7 +32,7 @@ public struct Book: ResponseSerializable {
     public let comments: String?
     public let cover: CoverEndpoint
     public let identifiers: [Identifier]
-    public let languages: [String] // TODO: enum?
+    public let languages: [String] // TODO: enum? if you do do enum, might be good to include case like this: .unexpected(String)
     public let lastModified: Date
     public let tags: [String]
     public let thumbnail: ThumbnailEndpoint
@@ -44,7 +44,7 @@ public struct Book: ResponseSerializable {
     }
     
     public struct Identifier {
-        public let name: String // TODO: enum? Google, ISBN, etc.?
+        public let name: String // TODO: enum? Google, ISBN, etc.? if you do do enum, might be good to include case like this: .unexpected(String)
         public let uniqueID: String
     }
     
