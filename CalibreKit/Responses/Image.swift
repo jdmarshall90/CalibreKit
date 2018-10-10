@@ -12,7 +12,7 @@ public struct Image: ResponseSerializable {
     public let image: UIImage
     
     public init(from decoder: Decoder) throws {
-        // TODO: revisit this, try implementing a custom Decoder and call it from ImageEndpoint.transform(responseData:), then the other init can go away
+        // TODO: revisit this
         fatalError("unused, but required by the compiler")
     }
     
