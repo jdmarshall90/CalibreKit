@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D02F75D5216D96410040EDE5 /* CoverEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02F75D4216D96410040EDE5 /* CoverEndpoint.swift */; };
+		D02F75D7216D964E0040EDE5 /* ThumbnailEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02F75D6216D964E0040EDE5 /* ThumbnailEndpoint.swift */; };
+		D02F75D9216D96570040EDE5 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02F75D8216D96570040EDE5 /* Image.swift */; };
+		D02F75DB216D97000040EDE5 /* ImageEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02F75DA216D97000040EDE5 /* ImageEndpoint.swift */; };
 		D048717E216A975C0085D22C /* CalibreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0487174216A975C0085D22C /* CalibreKit.framework */; };
 		D0487183216A975C0085D22C /* CalibreKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0487182216A975C0085D22C /* CalibreKitTests.swift */; };
 		D0487185216A975C0085D22C /* CalibreKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D0487177216A975C0085D22C /* CalibreKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,6 +35,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D02F75D4216D96410040EDE5 /* CoverEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverEndpoint.swift; sourceTree = "<group>"; };
+		D02F75D6216D964E0040EDE5 /* ThumbnailEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailEndpoint.swift; sourceTree = "<group>"; };
+		D02F75D8216D96570040EDE5 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		D02F75DA216D97000040EDE5 /* ImageEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEndpoint.swift; sourceTree = "<group>"; };
 		D0487174216A975C0085D22C /* CalibreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CalibreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0487177216A975C0085D22C /* CalibreKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalibreKit.h; sourceTree = "<group>"; };
 		D0487178216A975C0085D22C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -122,6 +130,9 @@
 			children = (
 				D048718E216A97C30085D22C /* Endpoint.swift */,
 				D0B475FE216C3AF8008FDA50 /* BooksEndpoint.swift */,
+				D02F75D4216D96410040EDE5 /* CoverEndpoint.swift */,
+				D02F75DA216D97000040EDE5 /* ImageEndpoint.swift */,
+				D02F75D6216D964E0040EDE5 /* ThumbnailEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -132,6 +143,7 @@
 				D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */,
 				D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */,
 				D0B47600216C3B37008FDA50 /* Book.swift */,
+				D02F75D8216D96570040EDE5 /* Image.swift */,
 				D0B47606216C446C008FDA50 /* example.json */,
 			);
 			path = Responses;
@@ -272,9 +284,13 @@
 				D0B47605216C3B6F008FDA50 /* CalibreError.swift in Sources */,
 				D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */,
 				D0B475FF216C3AF8008FDA50 /* BooksEndpoint.swift in Sources */,
+				D02F75D7216D964E0040EDE5 /* ThumbnailEndpoint.swift in Sources */,
+				D02F75DB216D97000040EDE5 /* ImageEndpoint.swift in Sources */,
 				D048718F216A97C30085D22C /* Endpoint.swift in Sources */,
 				D0B47601216C3B37008FDA50 /* Book.swift in Sources */,
+				D02F75D5216D96410040EDE5 /* CoverEndpoint.swift in Sources */,
 				D0B475FD216C3AC4008FDA50 /* DataRequest+Calibre.swift in Sources */,
+				D02F75D9216D96570040EDE5 /* Image.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
