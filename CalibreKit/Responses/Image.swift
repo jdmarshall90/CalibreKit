@@ -12,7 +12,6 @@ public struct Image: ResponseSerializable {
     public let image: UIImage
     
     public init(from decoder: Decoder) throws {
-        // TODO: revisit this
         fatalError("unused, but required by the compiler")
     }
     
