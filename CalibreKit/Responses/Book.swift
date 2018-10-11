@@ -8,8 +8,6 @@
 
 import Foundation
 
-// TODO: see if any / all of these need to be optional? - reference this: https://github.com/kovidgoyal/calibre/blob/master/resources/metadata_sqlite.sql
-
 public struct Book: ResponseSerializable {
     
     private enum CodingKeys: String, CodingKey {
@@ -185,8 +183,8 @@ public struct Book: ResponseSerializable {
         self.tags = try container.decode([String].self, forKey: .tags)
         
         let rawTitle = try container.decode(String.self, forKey: .title)
-        let rawTitleSort = try container.decode(String.self, forKey: .titleSort)
-        self.title = Title(name: rawTitle, sort: rawTitleSort)
+        let rawTitleSort = try container.decode(Optional<String>.self, forKey: .titleSort)
+        self.title = Title(name: rawTitle, sort: rawTitleSort ?? rawTitle)
         
         self.thumbnail = try container.decode(ThumbnailEndpoint.self, forKey: .thumbnail)
     }
