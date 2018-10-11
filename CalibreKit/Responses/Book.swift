@@ -8,7 +8,7 @@
 
 import Foundation
 
-// TODO: see if any / all of these need to be optional?
+// TODO: see if any / all of these need to be optional? reference this: https://github.com/kovidgoyal/calibre/blob/master/resources/metadata_sqlite.sql
 
 public struct Book: ResponseSerializable {
     
