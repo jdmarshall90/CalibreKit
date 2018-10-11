@@ -11,7 +11,8 @@ import Foundation
 public struct Book: ResponseSerializable {
     
     private enum CodingKeys: String, CodingKey {
-        case applicationID = "application_id"
+        // swiftlint:disable:next identifier_name
+        case id = "application_id"
         case comments
         case cover
         case identifiers
@@ -25,7 +26,8 @@ public struct Book: ResponseSerializable {
         case authorSortMap = "author_sort_map"
     }
     
-    public let applicationID: Int
+    // swiftlint:disable:next identifier_name
+    public let id: Int
     public let authors: [Author]
     public let comments: String?
     public let cover: CoverEndpoint
@@ -160,7 +162,7 @@ public struct Book: ResponseSerializable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.applicationID = try container.decode(Int.self, forKey: .applicationID)
+        self.id = try container.decode(Int.self, forKey: .id)
         
         let rawAuthors = try container.decode([String].self, forKey: .authors)
         let rawAuthorSortMap = try container.decode([String: String].self, forKey: .authorSortMap)
