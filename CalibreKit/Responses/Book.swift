@@ -43,9 +43,54 @@ public struct Book: ResponseSerializable {
         public let sort: String
     }
     
-    public struct Identifier {
-        public let name: String // TODO: enum? Google, ISBN, etc.? if you do do enum, might be good to include case like this: .unexpected(String) - reference this: https://manual.calibre-ebook.com/generated/en/fetch-ebook-metadata.html see the --allowed-plugin option
-        public let uniqueID: String
+    public enum Identifier {
+        // swiftlint:disable identifier_name
+        case isbn(String)
+        case google(String)
+        case other(source: String, uniqueID: String)
+        // swiftlint:enable identifier_name
+        
+        private var serverValue: String? {
+            switch self {
+            case .isbn:
+                return "isbn"
+            case .google:
+                return "google"
+            case .other:
+                return nil
+            }
+        }
+        
+        public var displayValue: String {
+            switch self {
+            case .isbn:
+                return "ISBN"
+            case .google:
+                return "Google"
+            case .other(let source, _):
+                return source
+            }
+        }
+        
+        public var uniqueID: String {
+            switch self {
+            case .isbn(let uniqueID),
+                 .google(let uniqueID),
+                 .other(_, let uniqueID):
+                return uniqueID
+            }
+        }
+        
+        internal init(source: String, uniqueID: String) {
+            switch source {
+            case Identifier.isbn("").serverValue:
+                self = .isbn(uniqueID)
+            case Identifier.google("").serverValue:
+                self = .google(uniqueID)
+            default:
+                self = .other(source: source, uniqueID: uniqueID)
+            }
+        }
     }
     
     public enum Language: ResponseSerializable {
@@ -127,7 +172,7 @@ public struct Book: ResponseSerializable {
         self.cover = try container.decode(CoverEndpoint.self, forKey: .cover)
         
         let rawIdentifiers = try container.decode([String: String].self, forKey: .identifiers)
-        self.identifiers = rawIdentifiers.map { Identifier(name: $0.key, uniqueID: $0.value) }
+        self.identifiers = rawIdentifiers.map { Identifier(source: $0.key, uniqueID: $0.value) }
         
         self.languages = try container.decode([Language].self, forKey: .languages)
         
