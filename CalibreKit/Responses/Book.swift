@@ -155,7 +155,7 @@ public struct Book: ResponseSerializable {
     
     private static let dateFormatter: ISO8601DateFormatter = {
         let formatter = ISO8601DateFormatter()
-        formatter.timeZone = TimeZone.current // TODO: This doesn't seem to work, come back to this
+        formatter.timeZone = TimeZone.current
         return formatter
     }()
     
