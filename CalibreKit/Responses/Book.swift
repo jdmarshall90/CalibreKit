@@ -8,7 +8,7 @@
 
 import Foundation
 
-// TODO: see if any / all of these need to be optional? reference this: https://github.com/kovidgoyal/calibre/blob/master/resources/metadata_sqlite.sql
+// TODO: see if any / all of these need to be optional? - reference this: https://github.com/kovidgoyal/calibre/blob/master/resources/metadata_sqlite.sql
 
 public struct Book: ResponseSerializable {
     
@@ -32,7 +32,7 @@ public struct Book: ResponseSerializable {
     public let comments: String?
     public let cover: CoverEndpoint
     public let identifiers: [Identifier]
-    public let languages: [String] // TODO: enum? if you do do enum, might be good to include case like this: .unexpected(String)
+    public let languages: [String] // TODO: enum? if you do do enum, might be good to include case like this: .unexpected(String) - reference this http://www.loc.gov/standards/iso639-2/php/code_list.php
     public let lastModified: Date
     public let tags: [String]
     public let thumbnail: ThumbnailEndpoint
@@ -44,7 +44,7 @@ public struct Book: ResponseSerializable {
     }
     
     public struct Identifier {
-        public let name: String // TODO: enum? Google, ISBN, etc.? if you do do enum, might be good to include case like this: .unexpected(String)
+        public let name: String // TODO: enum? Google, ISBN, etc.? if you do do enum, might be good to include case like this: .unexpected(String) - reference this: https://manual.calibre-ebook.com/generated/en/fetch-ebook-metadata.html see the --allowed-plugin option
         public let uniqueID: String
     }
     
