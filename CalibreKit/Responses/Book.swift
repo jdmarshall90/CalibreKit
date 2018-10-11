@@ -32,7 +32,7 @@ public struct Book: ResponseSerializable {
     public let comments: String?
     public let cover: CoverEndpoint
     public let identifiers: [Identifier]
-    public let languages: [String] // TODO: enum? if you do do enum, might be good to include case like this: .unexpected(String) - reference this http://www.loc.gov/standards/iso639-2/php/code_list.php
+    public let languages: [Language]
     public let lastModified: Date
     public let tags: [String]
     public let thumbnail: ThumbnailEndpoint
@@ -46,6 +46,61 @@ public struct Book: ResponseSerializable {
     public struct Identifier {
         public let name: String // TODO: enum? Google, ISBN, etc.? if you do do enum, might be good to include case like this: .unexpected(String) - reference this: https://manual.calibre-ebook.com/generated/en/fetch-ebook-metadata.html see the --allowed-plugin option
         public let uniqueID: String
+    }
+    
+    public enum Language: ResponseSerializable {
+        case english
+        case latin
+        case russian
+        case spanish
+        // swiftlint:disable:next identifier_name
+        case other(String)
+        
+        private var serverValue: String? {
+            switch self {
+            case .english:
+                return "eng"
+            case .latin:
+                return "lat"
+            case .russian:
+                return "rus"
+            case .spanish:
+                return "spa"
+            case .other:
+                return nil
+            }
+        }
+        
+        public var displayValue: String {
+            switch self {
+            case .english:
+                return "English"
+            case .latin:
+                return "Latin"
+            case .russian:
+                return "Russian"
+            case .spanish:
+                return "Spanish"
+            case .other(let language):
+                return language
+            }
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let rawValue = try decoder.singleValueContainer().decode(String.self)
+            switch rawValue {
+            case Language.english.serverValue:
+                self = .english
+            case Language.latin.serverValue:
+                self = .latin
+            case Language.russian.serverValue:
+                self = .russian
+            case Language.spanish.serverValue:
+                self = .spanish
+            default:
+                self = .other(rawValue)
+            }
+        }
     }
     
     public struct Title {
@@ -74,7 +129,7 @@ public struct Book: ResponseSerializable {
         let rawIdentifiers = try container.decode([String: String].self, forKey: .identifiers)
         self.identifiers = rawIdentifiers.map { Identifier(name: $0.key, uniqueID: $0.value) }
         
-        self.languages = try container.decode([String].self, forKey: .languages)
+        self.languages = try container.decode([Language].self, forKey: .languages)
         
         let rawLastModified = try container.decode(String.self, forKey: .lastModified)
         guard let lastModified = Book.dateFormatter.date(from: rawLastModified) else {
