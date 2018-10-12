@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Book: ResponseSerializable {
+public struct Book: ResponseSerializable, Equatable {
     
     private enum CodingKeys: String, CodingKey {
         // swiftlint:disable:next identifier_name
@@ -24,6 +24,10 @@ public struct Book: ResponseSerializable {
         case titleSort = "title_sort"
         case authors
         case authorSortMap = "author_sort_map"
+    }
+    
+    public static func == (lhs: Book, rhs: Book) -> Bool {
+        return lhs.id == rhs.id
     }
     
     // swiftlint:disable:next identifier_name
