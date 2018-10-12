@@ -35,14 +35,12 @@ public struct ImageEndpoint: Endpoint, ResponseSerializable {
     
     public func hitService(completion: @escaping (DataResponse<Image>) -> Void) {
         guard let cachedResponse = Cache.cache[relativePath] else {
-            print("network")
             request(absoluteURL, method: method, parameters: nil).responseCalibre(transform: transform) {
                 Cache.cache[self.relativePath] = $0
                 completion($0)
             }
             return
         }
-        print("cache")
         completion(cachedResponse)
     }
 }
