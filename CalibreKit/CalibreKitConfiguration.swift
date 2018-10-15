@@ -9,6 +9,5 @@
 import Foundation
 
 public struct CalibreKitConfiguration {
-    // swiftlint:disable:next force_unwrapping
-    public static var baseURL: URL = URL(string: "http://localhost:8080")!
+    public static var baseURL: URL?
 }
