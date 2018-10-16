@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D008D86C21757E3000E5C0DA /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D008D86B21757E3000E5C0DA /* Request.swift */; };
 		D02F75D5216D96410040EDE5 /* CoverEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02F75D4216D96410040EDE5 /* CoverEndpoint.swift */; };
 		D02F75D7216D964E0040EDE5 /* ThumbnailEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02F75D6216D964E0040EDE5 /* ThumbnailEndpoint.swift */; };
 		D02F75D9216D96570040EDE5 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02F75D8216D96570040EDE5 /* Image.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D008D86B21757E3000E5C0DA /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		D02F75D4216D96410040EDE5 /* CoverEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverEndpoint.swift; sourceTree = "<group>"; };
 		D02F75D6216D964E0040EDE5 /* ThumbnailEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailEndpoint.swift; sourceTree = "<group>"; };
 		D02F75D8216D96570040EDE5 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */,
+				D008D86B21757E3000E5C0DA /* Request.swift */,
 				D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */,
 				D0B47600216C3B37008FDA50 /* Book.swift */,
 				D02F75D8216D96570040EDE5 /* Image.swift */,
@@ -281,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0B47603216C3B5E008FDA50 /* CalibreKitConfiguration.swift in Sources */,
+				D008D86C21757E3000E5C0DA /* Request.swift in Sources */,
 				D0B47605216C3B6F008FDA50 /* CalibreError.swift in Sources */,
 				D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */,
 				D0B475FF216C3AF8008FDA50 /* BooksEndpoint.swift in Sources */,

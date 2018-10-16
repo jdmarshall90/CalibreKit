@@ -29,21 +29,3 @@ internal extension DataRequest {
         return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
 }
-
-// TODO: move this to a different spot
-@discardableResult
-internal func request(
-    _ url: @autoclosure () throws -> URL,
-    method: HTTPMethod = .get,
-    parameters: Parameters? = nil,
-    encoding: ParameterEncoding = URLEncoding.default,
-    headers: HTTPHeaders? = nil) rethrows
-    -> DataRequest {
-    return SessionManager.default.request(
-        try url(),
-        method: method,
-        parameters: parameters,
-        encoding: encoding,
-        headers: headers
-    )
-}
