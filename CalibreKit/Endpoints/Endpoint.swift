@@ -12,22 +12,29 @@ import Foundation
 public protocol Endpoint {
     associatedtype ParsedResponse: ResponseSerializable
     
-    var absoluteURL: URL { get }
     var method: HTTPMethod { get }
     var relativePath: String { get }
     
+    func absoluteURL() throws -> URL
     func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void)
     func transform(responseData: Data) throws -> ParsedResponse
 }
 
 public extension Endpoint {
-    public var absoluteURL: URL {
+    public func absoluteURL() throws -> URL {
+        guard let baseURL = CalibreKitConfiguration.baseURL else {
+            throw CalibreError.message("Go into settings and set your Calibre© Content Server URL")
+        }
         // swiftlint:disable:next force_unwrapping
-        return URL(string: relativePath, relativeTo: CalibreKitConfiguration.baseURL)!
+        return URL(string: relativePath, relativeTo: baseURL)!
     }
     
     public func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void) {
-        request(absoluteURL, method: method, parameters: nil).responseCalibre(transform: transform, completionHandler: completion)
+        do {
+            try request(try absoluteURL(), method: method, parameters: nil).responseCalibre(transform: transform, completionHandler: completion)
+        } catch {
+            completion(DataResponse(request: nil, response: nil, data: nil, result: .failure(error)))
+        }
     }
     
     public func transform(responseData: Data) throws -> ParsedResponse {

@@ -35,10 +35,15 @@ public struct ImageEndpoint: Endpoint, ResponseSerializable {
     
     public func hitService(completion: @escaping (DataResponse<Image>) -> Void) {
         guard let cachedResponse = Cache.cache[relativePath] else {
-            request(absoluteURL, method: method, parameters: nil).responseCalibre(transform: transform) {
-                Cache.cache[self.relativePath] = $0
-                completion($0)
+            do {
+                try request(try absoluteURL(), method: method, parameters: nil).responseCalibre(transform: transform) {
+                    Cache.cache[self.relativePath] = $0
+                    completion($0)
+                }
+            } catch {
+                completion(DataResponse(request: nil, response: nil, data: nil, result: .failure(error)))
             }
+            
             return
         }
         completion(cachedResponse)
