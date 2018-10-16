@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal enum CalibreError: Error {
+public enum CalibreError: Error {
     // swiftlint:disable:next identifier_name
     case message(String)
 }
