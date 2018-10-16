@@ -103,6 +103,7 @@
 				D0487177216A975C0085D22C /* CalibreKit.h */,
 				D0B47604216C3B6F008FDA50 /* CalibreError.swift */,
 				D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */,
+				D008D86B21757E3000E5C0DA /* Request.swift */,
 				D0B475F8216C36CA008FDA50 /* Endpoints */,
 				D0B475F9216C36D0008FDA50 /* Responses */,
 				D0487178216A975C0085D22C /* Info.plist */,
@@ -143,7 +144,6 @@
 			isa = PBXGroup;
 			children = (
 				D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */,
-				D008D86B21757E3000E5C0DA /* Request.swift */,
 				D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */,
 				D0B47600216C3B37008FDA50 /* Book.swift */,
 				D02F75D8216D96570040EDE5 /* Image.swift */,
