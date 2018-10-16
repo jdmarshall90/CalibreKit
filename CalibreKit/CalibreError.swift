@@ -11,4 +11,11 @@ import Foundation
 public enum CalibreError: Error {
     // swiftlint:disable:next identifier_name
     case message(String)
+    
+    public var localizedDescription: String {
+        switch self {
+        case .message(let description):
+            return description
+        }
+    }
 }
