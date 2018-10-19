@@ -49,6 +49,8 @@
 		D0487184216A975C0085D22C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D048718E216A97C30085D22C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		D0487192216A9DA90085D22C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0518E7B21797CA20087A000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		D0518E7C21797CA20087A000 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializable.swift; sourceTree = "<group>"; };
 		D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRequest+Calibre.swift"; sourceTree = "<group>"; };
 		D0B475FE216C3AF8008FDA50 /* BooksEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksEndpoint.swift; sourceTree = "<group>"; };
@@ -107,6 +109,8 @@
 				D0B475F8216C36CA008FDA50 /* Endpoints */,
 				D0B475F9216C36D0008FDA50 /* Responses */,
 				D0487178216A975C0085D22C /* Info.plist */,
+				D0518E7C21797CA20087A000 /* LICENSE */,
+				D0518E7B21797CA20087A000 /* README.md */,
 			);
 			path = CalibreKit;
 			sourceTree = "<group>";
