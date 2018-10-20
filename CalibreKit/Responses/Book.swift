@@ -10,9 +10,10 @@ import Foundation
 
 public struct Book: ResponseSerializable {
     
-    private enum CodingKeys: String, CodingKey {
+    fileprivate enum CodingKeys: String, CodingKey {
         // swiftlint:disable:next identifier_name
         case id = "application_id"
+        case addedOn = "timestamp"
         case comments
         case cover
         case identifiers
@@ -28,6 +29,7 @@ public struct Book: ResponseSerializable {
     
     // swiftlint:disable:next identifier_name
     public let id: Int
+    public let addedOn: Date
     public let authors: [Author]
     public let comments: String?
     public let cover: CoverEndpoint
@@ -153,16 +155,11 @@ public struct Book: ResponseSerializable {
         public let sort: String
     }
     
-    private static let dateFormatter: ISO8601DateFormatter = {
-        let formatter = ISO8601DateFormatter()
-        formatter.timeZone = TimeZone.current
-        return formatter
-    }()
-    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.id = try container.decode(Int.self, forKey: .id)
+        self.addedOn = try container.decodeDate(forKey: .addedOn)
         
         let rawAuthors = try container.decode([String].self, forKey: .authors)
         let rawAuthorSortMap = try container.decode([String: String].self, forKey: .authorSortMap)
@@ -175,13 +172,7 @@ public struct Book: ResponseSerializable {
         self.identifiers = rawIdentifiers.map { Identifier(source: $0.key, uniqueID: $0.value) }
         
         self.languages = try container.decode([Language].self, forKey: .languages)
-        
-        let rawLastModified = try container.decode(String.self, forKey: .lastModified)
-        guard let lastModified = Book.dateFormatter.date(from: rawLastModified) else {
-            throw CalibreError.message("Unexected date format")
-        }
-        self.lastModified = lastModified
-        
+        self.lastModified = try container.decodeDate(forKey: .lastModified)
         self.tags = try container.decode([String].self, forKey: .tags)
         
         let rawTitle = try container.decode(String.self, forKey: .title)
@@ -189,5 +180,21 @@ public struct Book: ResponseSerializable {
         self.title = Title(name: rawTitle, sort: rawTitleSort ?? rawTitle)
         
         self.thumbnail = try container.decode(ThumbnailEndpoint.self, forKey: .thumbnail)
+    }
+}
+
+private extension KeyedDecodingContainer where Key == Book.CodingKeys {
+    private static let dateFormatter: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        formatter.timeZone = TimeZone.current
+        return formatter
+    }()
+    
+    func decodeDate(forKey key: Key) throws -> Date {
+        let rawDate = try decode(String.self, forKey: key)
+        guard let date = KeyedDecodingContainer<K>.dateFormatter.date(from: rawDate) else {
+            throw CalibreError.message("Unexected date format")
+        }
+        return date
     }
 }
