@@ -187,7 +187,6 @@ private extension KeyedDecodingContainer where Key == Book.CodingKeys {
     private static let dateFormatter: ISO8601DateFormatter = {
         let formatter = ISO8601DateFormatter()
         formatter.timeZone = TimeZone.current
-        formatter.formatOptions = .withFractionalSeconds
         return formatter
     }()
     
