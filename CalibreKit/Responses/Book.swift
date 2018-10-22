@@ -29,13 +29,13 @@ public struct Book: ResponseSerializable {
     
     // swiftlint:disable:next identifier_name
     public let id: Int
-    public let addedOn: Date
+    public let addedOn: Date?
     public let authors: [Author]
     public let comments: String?
     public let cover: CoverEndpoint
     public let identifiers: [Identifier]
     public let languages: [Language]
-    public let lastModified: Date
+    public let lastModified: Date?
     public let tags: [String]
     public let thumbnail: ThumbnailEndpoint
     public let title: Title
@@ -191,11 +191,9 @@ private extension KeyedDecodingContainer where Key == Book.CodingKeys {
         return formatter
     }()
     
-    func decodeDate(forKey key: Key) throws -> Date {
+    func decodeDate(forKey key: Key) throws -> Date? {
         let rawDate = try decode(String.self, forKey: key)
-        guard let date = KeyedDecodingContainer<K>.dateFormatter.date(from: rawDate) else {
-            throw CalibreError.message("Unexected date format")
-        }
+        let date = KeyedDecodingContainer<K>.dateFormatter.date(from: rawDate)
         return date
     }
 }
