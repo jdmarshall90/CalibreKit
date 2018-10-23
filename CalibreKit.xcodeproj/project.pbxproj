@@ -24,6 +24,7 @@
 		D0B47603216C3B5E008FDA50 /* CalibreKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */; };
 		D0B47605216C3B6F008FDA50 /* CalibreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47604216C3B6F008FDA50 /* CalibreError.swift */; };
 		D0EFA8E4217AE5C700622080 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D0518E7C21797CA20087A000 /* LICENSE */; };
+		D0FD619F217EAF70004099FA /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FD619E217EAF70004099FA /* Cache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreKitConfiguration.swift; sourceTree = "<group>"; };
 		D0B47604216C3B6F008FDA50 /* CalibreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreError.swift; sourceTree = "<group>"; };
 		D0B47606216C446C008FDA50 /* example.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = example.json; sourceTree = "<group>"; };
+		D0FD619E217EAF70004099FA /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Cache.swift; path = ../../CalibreKit/CalibreKit/Cache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				D0487177216A975C0085D22C /* CalibreKit.h */,
+				D0FD619E217EAF70004099FA /* Cache.swift */,
 				D0B47604216C3B6F008FDA50 /* CalibreError.swift */,
 				D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */,
 				D008D86B21757E3000E5C0DA /* Request.swift */,
@@ -295,6 +298,7 @@
 				D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */,
 				D0B475FF216C3AF8008FDA50 /* BooksEndpoint.swift in Sources */,
 				D02F75D7216D964E0040EDE5 /* ThumbnailEndpoint.swift in Sources */,
+				D0FD619F217EAF70004099FA /* Cache.swift in Sources */,
 				D02F75DB216D97000040EDE5 /* ImageEndpoint.swift in Sources */,
 				D048718F216A97C30085D22C /* Endpoint.swift in Sources */,
 				D0B47601216C3B37008FDA50 /* Book.swift in Sources */,

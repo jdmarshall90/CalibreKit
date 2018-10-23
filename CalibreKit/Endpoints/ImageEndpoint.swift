@@ -14,12 +14,12 @@ public struct ImageEndpoint: Endpoint, ResponseSerializable {
     public let method: HTTPMethod = .get
     public let relativePath: String
     
-    private struct Cache {
+    internal struct Cache {
         // Long term, this caching will likely need to be ripped out and made scalable.
         // Good enough for now, though.
         private init() {}
         
-        static var cache: [String: DataResponse<Image>] = [:]
+        internal static var cache: [String: DataResponse<Image>] = [:]
     }
     
     public init(from decoder: Decoder) throws {
