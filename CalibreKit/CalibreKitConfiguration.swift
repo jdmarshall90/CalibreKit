@@ -8,8 +8,6 @@
 
 import Foundation
 
-// TODO: Add license notice to all files (https://www.gnu.org/licenses/gpl-howto.html)
-
 public struct CalibreKitConfiguration {
     public static var baseURL: URL?
 }
