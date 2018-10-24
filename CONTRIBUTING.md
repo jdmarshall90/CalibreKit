@@ -1,7 +1,7 @@
 # Contributing Guidelines
 
-This document contains information and guidelines about contributing to this project.
-Please read it before you start participating.
+This document contains information and guidelines about contributing to this
+project. Please read it before you start participating.
 
 **Topics**
 
