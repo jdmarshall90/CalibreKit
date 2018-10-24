@@ -7,7 +7,6 @@ Please read it before you start participating.
 
 * [Developers Certificate of Origin](#developers-certificate-of-origin)
 
-
 ## [Developer's Certificate of Origin 1.1](https://developercertificate.org)
 
 By making a contribution to this project, I certify that:
