@@ -28,6 +28,7 @@ public struct BooksEndpoint: Endpoint {
     public typealias ParsedResponse = [Book]
     public let method: HTTPMethod = .get
     public let relativePath = "/ajax/books/"
+    public let parameters: Parameters? = nil
     
     public init() {}
     

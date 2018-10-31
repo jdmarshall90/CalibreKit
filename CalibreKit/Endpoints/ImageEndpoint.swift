@@ -22,12 +22,12 @@
 //
 
 import Alamofire
-import Foundation
 
 public struct ImageEndpoint: Endpoint, ResponseSerializable {
     public typealias ParsedResponse = Image
     public let method: HTTPMethod = .get
     public let relativePath: String
+    public let parameters: Parameters? = nil
     
     internal struct Cache {
         // Long term, this caching will likely need to be ripped out and made scalable.
@@ -51,7 +51,7 @@ public struct ImageEndpoint: Endpoint, ResponseSerializable {
     public func hitService(completion: @escaping (DataResponse<Image>) -> Void) {
         guard let cachedResponse = Cache.cache[relativePath] else {
             do {
-                try request(try absoluteURL(), method: method, parameters: nil).responseCalibre(transform: transform) {
+                try request(try absoluteURL(), method: method, parameters: parameters, encoding: encoding).responseCalibre(transform: transform) {
                     Cache.cache[self.relativePath] = $0
                     completion($0)
                 }
