@@ -23,6 +23,9 @@
 		D0B47601216C3B37008FDA50 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47600216C3B37008FDA50 /* Book.swift */; };
 		D0B47603216C3B5E008FDA50 /* CalibreKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */; };
 		D0B47605216C3B6F008FDA50 /* CalibreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47604216C3B6F008FDA50 /* CalibreError.swift */; };
+		D0D0F3532189266800B6A598 /* BookEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D0F3522189266800B6A598 /* BookEndpoint.swift */; };
+		D0D0F355218927EE00B6A598 /* SearchEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D0F354218927EE00B6A598 /* SearchEndpoint.swift */; };
+		D0E09B012189432F0042C12D /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E09B002189432F0042C12D /* Search.swift */; };
 		D0EFA8E4217AE5C700622080 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D0518E7C21797CA20087A000 /* LICENSE */; };
 		D0FD619F217EAF70004099FA /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FD619E217EAF70004099FA /* Cache.swift */; };
 /* End PBXBuildFile section */
@@ -59,7 +62,9 @@
 		D0B47600216C3B37008FDA50 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreKitConfiguration.swift; sourceTree = "<group>"; };
 		D0B47604216C3B6F008FDA50 /* CalibreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreError.swift; sourceTree = "<group>"; };
-		D0B47606216C446C008FDA50 /* example.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = example.json; sourceTree = "<group>"; };
+		D0D0F3522189266800B6A598 /* BookEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookEndpoint.swift; sourceTree = "<group>"; };
+		D0D0F354218927EE00B6A598 /* SearchEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEndpoint.swift; sourceTree = "<group>"; };
+		D0E09B002189432F0042C12D /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		D0FD619E217EAF70004099FA /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Cache.swift; path = ../../CalibreKit/CalibreKit/Cache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,9 +145,11 @@
 			isa = PBXGroup;
 			children = (
 				D048718E216A97C30085D22C /* Endpoint.swift */,
+				D0D0F3522189266800B6A598 /* BookEndpoint.swift */,
 				D0B475FE216C3AF8008FDA50 /* BooksEndpoint.swift */,
 				D02F75D4216D96410040EDE5 /* CoverEndpoint.swift */,
 				D02F75DA216D97000040EDE5 /* ImageEndpoint.swift */,
+				D0D0F354218927EE00B6A598 /* SearchEndpoint.swift */,
 				D02F75D6216D964E0040EDE5 /* ThumbnailEndpoint.swift */,
 			);
 			path = Endpoints;
@@ -155,7 +162,7 @@
 				D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */,
 				D0B47600216C3B37008FDA50 /* Book.swift */,
 				D02F75D8216D96570040EDE5 /* Image.swift */,
-				D0B47606216C446C008FDA50 /* example.json */,
+				D0E09B002189432F0042C12D /* Search.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -294,6 +301,7 @@
 			files = (
 				D0B47603216C3B5E008FDA50 /* CalibreKitConfiguration.swift in Sources */,
 				D008D86C21757E3000E5C0DA /* Request.swift in Sources */,
+				D0D0F355218927EE00B6A598 /* SearchEndpoint.swift in Sources */,
 				D0B47605216C3B6F008FDA50 /* CalibreError.swift in Sources */,
 				D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */,
 				D0B475FF216C3AF8008FDA50 /* BooksEndpoint.swift in Sources */,
@@ -304,7 +312,9 @@
 				D0B47601216C3B37008FDA50 /* Book.swift in Sources */,
 				D02F75D5216D96410040EDE5 /* CoverEndpoint.swift in Sources */,
 				D0B475FD216C3AC4008FDA50 /* DataRequest+Calibre.swift in Sources */,
+				D0E09B012189432F0042C12D /* Search.swift in Sources */,
 				D02F75D9216D96570040EDE5 /* Image.swift in Sources */,
+				D0D0F3532189266800B6A598 /* BookEndpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
