@@ -40,6 +40,8 @@ public struct Book: ResponseSerializable {
         case titleSort = "title_sort"
         case authors
         case authorSortMap = "author_sort_map"
+        case publishedDate = "pubdate"
+        case rating
     }
     
     // swiftlint:disable:next identifier_name
@@ -54,6 +56,8 @@ public struct Book: ResponseSerializable {
     public let tags: [String]
     public let thumbnail: ThumbnailEndpoint
     public let title: Title
+    public let publishedDate: Date?
+    public let rating: Rating
     
     public struct Author {
         public let name: String
@@ -170,6 +174,38 @@ public struct Book: ResponseSerializable {
         public let sort: String
     }
     
+    public enum Rating: Int, ResponseSerializable {
+        case unrated
+        case oneStar
+        case twoStars
+        case threeStars
+        case fourStars
+        case fiveStars
+        
+        public var displayValue: String {
+            switch self {
+            case .unrated:
+                return "⭒⭒⭒⭒⭒"
+            case .oneStar:
+                return "⭑⭒⭒⭒⭒"
+            case .twoStars:
+                return "⭑⭑⭒⭒⭒"
+            case .threeStars:
+                return "⭑⭑⭑⭒⭒"
+            case .fourStars:
+                return "⭑⭑⭑⭑⭒"
+            case .fiveStars:
+                return "⭑⭑⭑⭑⭑"
+            }
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let rawRating = try container.decode(Int.self)
+            self = Rating(rawValue: rawRating)!
+        }
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -195,6 +231,9 @@ public struct Book: ResponseSerializable {
         self.title = Title(name: rawTitle, sort: rawTitleSort ?? rawTitle)
         
         self.thumbnail = try container.decode(ThumbnailEndpoint.self, forKey: .thumbnail)
+        
+        self.publishedDate = try container.decodeDate(forKey: .publishedDate)
+        self.rating = try container.decode(Rating.self, forKey: .rating)
     }
 }
 
