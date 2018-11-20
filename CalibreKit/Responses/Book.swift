@@ -202,7 +202,10 @@ public struct Book: ResponseSerializable {
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
             let rawRating = try container.decode(Int.self)
-            self = Rating(rawValue: rawRating)!
+            guard let rating = Rating(rawValue: rawRating) else {
+                throw CalibreError.message("Expected rating of 0-5, but got \(rawRating).")
+            }
+            self = rating
         }
     }
     
@@ -233,7 +236,11 @@ public struct Book: ResponseSerializable {
         self.thumbnail = try container.decode(ThumbnailEndpoint.self, forKey: .thumbnail)
         
         self.publishedDate = try container.decodeDate(forKey: .publishedDate)
-        self.rating = try container.decode(Rating.self, forKey: .rating)
+        do {
+            self.rating = try container.decode(Rating.self, forKey: .rating)
+        } catch let error as CalibreError {
+            throw CalibreError.message("Error in book \"\(title.name)\": " + error.localizedDescription)
+        }
     }
 }
 
