@@ -247,7 +247,7 @@ public struct Book: ResponseSerializable {
         do {
             self.rating = try container.decode(Rating.self, forKey: .rating)
         } catch let error as CalibreError {
-            throw CalibreError.message("Error in book \"\(title.name)\": " + error.localizedDescription)
+            throw CalibreError.message("Error in book \"\(title.name)\"'s rating: " + error.localizedDescription)
         }
         
         if let seriesName = try container.decodeIfPresent(String.self, forKey: .series),
