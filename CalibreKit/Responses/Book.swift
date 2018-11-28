@@ -42,6 +42,8 @@ public struct Book: ResponseSerializable {
         case authorSortMap = "author_sort_map"
         case publishedDate = "pubdate"
         case rating
+        case series
+        case seriesIndex = "series_index"
     }
     
     // swiftlint:disable:next identifier_name
@@ -58,6 +60,7 @@ public struct Book: ResponseSerializable {
     public let title: Title
     public let publishedDate: Date?
     public let rating: Rating
+    public let series: Series?
     
     public struct Author {
         public let name: String
@@ -209,6 +212,11 @@ public struct Book: ResponseSerializable {
         }
     }
     
+    public struct Series {
+        public let name: String
+        public let index: Double
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -240,6 +248,13 @@ public struct Book: ResponseSerializable {
             self.rating = try container.decode(Rating.self, forKey: .rating)
         } catch let error as CalibreError {
             throw CalibreError.message("Error in book \"\(title.name)\": " + error.localizedDescription)
+        }
+        
+        if let seriesName = try container.decodeIfPresent(String.self, forKey: .series),
+            let seriesIndex = try container.decodeIfPresent(Double.self, forKey: .seriesIndex) {
+            self.series = Series(name: seriesName, index: seriesIndex)
+        } else {
+            self.series = nil
         }
     }
 }
