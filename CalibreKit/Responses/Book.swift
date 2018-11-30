@@ -213,6 +213,19 @@ public struct Book: ResponseSerializable {
     }
     
     public struct Series {
+        private static let seriesIndexFormatter: NumberFormatter = {
+            let formatter = NumberFormatter()
+            formatter.minimumIntegerDigits = 1
+            formatter.minimumFractionDigits = 0
+            formatter.maximumFractionDigits = 2
+            return formatter
+        }()
+        
+        public var displayValue: String {
+            let displayIndex = "#\(Series.seriesIndexFormatter.string(from: NSNumber(value: index)) ?? "UNKNOWN")"
+            return "\(name) \(displayIndex)"
+        }
+        
         public let name: String
         public let index: Double
     }
