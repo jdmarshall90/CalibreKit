@@ -51,9 +51,12 @@ public struct ImageEndpoint: Endpoint, ResponseSerializable {
     public func hitService(completion: @escaping (DataResponse<Image>) -> Void) {
         guard let cachedResponse = Cache.cache[relativePath] else {
             do {
-                try request(try absoluteURL(), method: method, parameters: parameters, encoding: encoding).responseCalibre(transform: transform) {
-                    Cache.cache[self.relativePath] = $0
-                    completion($0)
+                try request(try absoluteURL(), method: method, parameters: parameters, encoding: encoding).responseCalibre(transform: transform) { response in
+                    response.result.ifSuccess {
+                        // Only cache successful responses, so if it fails, it will be able to retry.
+                        Cache.cache[self.relativePath] = response
+                    }
+                    completion(response)
                 }
             } catch {
                 completion(DataResponse(request: nil, response: nil, data: nil, result: .failure(error)))
