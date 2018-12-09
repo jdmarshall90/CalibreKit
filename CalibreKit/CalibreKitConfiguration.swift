@@ -21,8 +21,13 @@
 //  This file is part of project: CalibreKit
 //
 
+import AlamofireNetworkActivityIndicator
 import Foundation
 
 public struct CalibreKitConfiguration {
-    public static var baseURL: URL?
+    public static var baseURL: URL? {
+        didSet {
+            NetworkActivityIndicatorManager.shared.isEnabled = true
+        }
+    }
 }
