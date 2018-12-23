@@ -16,14 +16,14 @@
 		D0487183216A975C0085D22C /* CalibreKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0487182216A975C0085D22C /* CalibreKitTests.swift */; };
 		D0487185216A975C0085D22C /* CalibreKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D0487177216A975C0085D22C /* CalibreKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D048718F216A97C30085D22C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048718E216A97C30085D22C /* Endpoint.swift */; };
-		D0487193216A9DA90085D22C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0487192216A9DA90085D22C /* Alamofire.framework */; };
+		D049687821D01AF600BD24C4 /* AlamofireNetworkActivityIndicator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D049687621D01AF600BD24C4 /* AlamofireNetworkActivityIndicator.framework */; };
+		D049687921D01AF600BD24C4 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D049687721D01AF600BD24C4 /* Alamofire.framework */; };
 		D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */; };
 		D0B475FD216C3AC4008FDA50 /* DataRequest+Calibre.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */; };
 		D0B475FF216C3AF8008FDA50 /* BooksEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FE216C3AF8008FDA50 /* BooksEndpoint.swift */; };
 		D0B47601216C3B37008FDA50 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47600216C3B37008FDA50 /* Book.swift */; };
 		D0B47603216C3B5E008FDA50 /* CalibreKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */; };
 		D0B47605216C3B6F008FDA50 /* CalibreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B47604216C3B6F008FDA50 /* CalibreError.swift */; };
-		D0C14A8721BD8332000F7E4C /* AlamofireNetworkActivityIndicator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C14A8621BD8332000F7E4C /* AlamofireNetworkActivityIndicator.framework */; };
 		D0D0F3532189266800B6A598 /* BookEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D0F3522189266800B6A598 /* BookEndpoint.swift */; };
 		D0D0F355218927EE00B6A598 /* SearchEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D0F354218927EE00B6A598 /* SearchEndpoint.swift */; };
 		D0E09B012189432F0042C12D /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E09B002189432F0042C12D /* Search.swift */; };
@@ -54,7 +54,8 @@
 		D0487182216A975C0085D22C /* CalibreKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreKitTests.swift; sourceTree = "<group>"; };
 		D0487184216A975C0085D22C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D048718E216A97C30085D22C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
-		D0487192216A9DA90085D22C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D049687621D01AF600BD24C4 /* AlamofireNetworkActivityIndicator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireNetworkActivityIndicator.framework; path = Carthage/Build/iOS/AlamofireNetworkActivityIndicator.framework; sourceTree = "<group>"; };
+		D049687721D01AF600BD24C4 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		D0518E7B21797CA20087A000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		D0518E7C21797CA20087A000 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializable.swift; sourceTree = "<group>"; };
@@ -63,7 +64,6 @@
 		D0B47600216C3B37008FDA50 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreKitConfiguration.swift; sourceTree = "<group>"; };
 		D0B47604216C3B6F008FDA50 /* CalibreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibreError.swift; sourceTree = "<group>"; };
-		D0C14A8621BD8332000F7E4C /* AlamofireNetworkActivityIndicator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlamofireNetworkActivityIndicator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0D0F3522189266800B6A598 /* BookEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookEndpoint.swift; sourceTree = "<group>"; };
 		D0D0F354218927EE00B6A598 /* SearchEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEndpoint.swift; sourceTree = "<group>"; };
 		D0E09B002189432F0042C12D /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
@@ -75,8 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0487193216A9DA90085D22C /* Alamofire.framework in Frameworks */,
-				D0C14A8721BD8332000F7E4C /* AlamofireNetworkActivityIndicator.framework in Frameworks */,
+				D049687821D01AF600BD24C4 /* AlamofireNetworkActivityIndicator.framework in Frameworks */,
+				D049687921D01AF600BD24C4 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,8 +139,8 @@
 		D0487191216A9D9B0085D22C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D0C14A8621BD8332000F7E4C /* AlamofireNetworkActivityIndicator.framework */,
-				D0487192216A9DA90085D22C /* Alamofire.framework */,
+				D049687721D01AF600BD24C4 /* Alamofire.framework */,
+				D049687621D01AF600BD24C4 /* AlamofireNetworkActivityIndicator.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -475,6 +475,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = CalibreKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -502,6 +506,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = CalibreKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
