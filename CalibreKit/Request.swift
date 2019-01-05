@@ -32,11 +32,16 @@ internal func request(
     encoding: ParameterEncoding = URLEncoding.default,
     headers: HTTPHeaders? = nil) rethrows
     -> DataRequest {
-        return SessionManager.default.request(
+        let theRequest = SessionManager.default.request(
             try url(),
             method: method,
             parameters: parameters,
             encoding: encoding,
             headers: headers
         )
+        
+        if let credentials = CalibreKitConfiguration.configuration?.credentials {
+            theRequest.authenticate(usingCredential: URLCredential(user: credentials.username, password: credentials.password, persistence: .forSession))
+        }
+        return theRequest
 }

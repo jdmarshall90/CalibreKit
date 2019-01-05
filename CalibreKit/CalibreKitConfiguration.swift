@@ -25,7 +25,14 @@ import AlamofireNetworkActivityIndicator
 import Foundation
 
 public struct CalibreKitConfiguration {
+    @available(*, deprecated, message: "This will be removed in v2.0.0 of CalibreKit. Please migrate to `configuration`.")
     public static var baseURL: URL? {
+        didSet {
+            NetworkActivityIndicatorManager.shared.isEnabled = true
+        }
+    }
+    
+    public static var configuration: ServerConfiguration? {
         didSet {
             NetworkActivityIndicatorManager.shared.isEnabled = true
         }
