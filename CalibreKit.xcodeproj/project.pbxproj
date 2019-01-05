@@ -18,6 +18,7 @@
 		D048718F216A97C30085D22C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048718E216A97C30085D22C /* Endpoint.swift */; };
 		D049687821D01AF600BD24C4 /* AlamofireNetworkActivityIndicator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D049687621D01AF600BD24C4 /* AlamofireNetworkActivityIndicator.framework */; };
 		D049687921D01AF600BD24C4 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D049687721D01AF600BD24C4 /* Alamofire.framework */; };
+		D07C4E0021E08D3400E1B470 /* ServerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C4DFF21E08D3400E1B470 /* ServerConfiguration.swift */; };
 		D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */; };
 		D0B475FD216C3AC4008FDA50 /* DataRequest+Calibre.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */; };
 		D0B475FF216C3AF8008FDA50 /* BooksEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FE216C3AF8008FDA50 /* BooksEndpoint.swift */; };
@@ -58,6 +59,7 @@
 		D049687721D01AF600BD24C4 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		D0518E7B21797CA20087A000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		D0518E7C21797CA20087A000 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		D07C4DFF21E08D3400E1B470 /* ServerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ServerConfiguration.swift; path = ../../CalibreKit/CalibreKit/ServerConfiguration.swift; sourceTree = "<group>"; };
 		D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializable.swift; sourceTree = "<group>"; };
 		D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRequest+Calibre.swift"; sourceTree = "<group>"; };
 		D0B475FE216C3AF8008FDA50 /* BooksEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksEndpoint.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				D0B47604216C3B6F008FDA50 /* CalibreError.swift */,
 				D0B47602216C3B5E008FDA50 /* CalibreKitConfiguration.swift */,
 				D008D86B21757E3000E5C0DA /* Request.swift */,
+				D07C4DFF21E08D3400E1B470 /* ServerConfiguration.swift */,
 				D0B475F8216C36CA008FDA50 /* Endpoints */,
 				D0B475F9216C36D0008FDA50 /* Responses */,
 				D0487178216A975C0085D22C /* Info.plist */,
@@ -310,6 +313,7 @@
 				D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */,
 				D0B475FF216C3AF8008FDA50 /* BooksEndpoint.swift in Sources */,
 				D02F75D7216D964E0040EDE5 /* ThumbnailEndpoint.swift in Sources */,
+				D07C4E0021E08D3400E1B470 /* ServerConfiguration.swift in Sources */,
 				D0FD619F217EAF70004099FA /* Cache.swift in Sources */,
 				D02F75DB216D97000040EDE5 /* ImageEndpoint.swift in Sources */,
 				D048718F216A97C30085D22C /* Endpoint.swift in Sources */,
