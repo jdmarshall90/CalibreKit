@@ -24,7 +24,6 @@
 import Foundation
 
 public struct Book: ResponseSerializable {
-    
     fileprivate enum CodingKeys: String, CodingKey {
         // swiftlint:disable:next identifier_name
         case id = "application_id"
@@ -68,11 +67,9 @@ public struct Book: ResponseSerializable {
     }
     
     public enum Identifier {
-        // swiftlint:disable identifier_name
         case isbn(String)
         case google(String)
         case other(source: String, uniqueID: String)
-        // swiftlint:enable identifier_name
         
         private var serverValue: String? {
             switch self {
@@ -122,7 +119,6 @@ public struct Book: ResponseSerializable {
         case latin
         case russian
         case spanish
-        // swiftlint:disable:next identifier_name
         case other(String)
         
         private var serverValue: String? {
