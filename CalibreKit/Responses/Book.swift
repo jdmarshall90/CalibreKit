@@ -173,7 +173,7 @@ public struct Book: ResponseSerializable {
         public let sort: String
     }
     
-    public enum Rating: Int, ResponseSerializable {
+    public enum Rating: Int, ResponseSerializable, CaseIterable {
         case unrated
         case oneStar
         case twoStars
