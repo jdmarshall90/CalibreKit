@@ -102,7 +102,7 @@ public struct Book: ResponseSerializable {
             }
         }
         
-        internal init(source: String, uniqueID: String) {
+        public init(source: String, uniqueID: String) {
             switch source {
             case Identifier.isbn("").serverValue:
                 self = .isbn(uniqueID)
