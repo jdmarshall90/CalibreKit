@@ -224,6 +224,11 @@ public struct Book: ResponseSerializable {
         
         public let name: String
         public let index: Double
+        
+        public init(name: String, index: Double) {
+            self.name = name
+            self.index = index
+        }
     }
     
     public init(from decoder: Decoder) throws {
