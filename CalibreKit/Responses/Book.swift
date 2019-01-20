@@ -61,9 +61,14 @@ public struct Book: ResponseSerializable {
     public let rating: Rating
     public let series: Series?
     
-    public struct Author {
+    public struct Author: Hashable {
         public let name: String
         public let sort: String
+        
+        public init(name: String, sort: String) {
+            self.name = name
+            self.sort = sort
+        }
     }
     
     public enum Identifier {
@@ -114,7 +119,7 @@ public struct Book: ResponseSerializable {
         }
     }
     
-    public enum Language: ResponseSerializable {
+    public enum Language: ResponseSerializable, Hashable {
         case english
         case latin
         case russian
@@ -151,9 +156,8 @@ public struct Book: ResponseSerializable {
             }
         }
         
-        public init(from decoder: Decoder) throws {
-            let rawValue = try decoder.singleValueContainer().decode(String.self)
-            switch rawValue {
+        public init(displayValue: String) {
+            switch displayValue {
             case Language.english.serverValue:
                 self = .english
             case Language.latin.serverValue:
@@ -163,8 +167,13 @@ public struct Book: ResponseSerializable {
             case Language.spanish.serverValue:
                 self = .spanish
             default:
-                self = .other(rawValue)
+                self = .other(displayValue)
             }
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let rawValue = try decoder.singleValueContainer().decode(String.self)
+            self.init(displayValue: rawValue)
         }
     }
     
