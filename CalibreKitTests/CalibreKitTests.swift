@@ -34,4 +34,20 @@ class CalibreKitTests: XCTestCase {
         super.tearDown()
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+
+    func test() {
+        let theExpectation = expectation(description: "")
+        // swiftlint:disable unused_closure_parameter
+        SetFieldsEndpoint(id: 1).hitService { response in
+            print()
+            print(String(data: response.data!, encoding: .utf8))
+            print()
+            BookEndpoint(id: 1).hitService { response in
+                print()
+                print(String(data: response.data!, encoding: .utf8))
+                theExpectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 3, handler: nil)
+    }
 }
