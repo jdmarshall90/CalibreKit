@@ -24,6 +24,9 @@
 import Alamofire
 import Foundation
 
+// TODO: Test trying to save changes while unauthenticated
+// TODO: Test trying to save changes while authenticated with user with no write access
+
 public protocol Endpoint {
     associatedtype ParsedResponse: ResponseSerializable
     

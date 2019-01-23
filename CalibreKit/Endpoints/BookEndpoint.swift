@@ -24,6 +24,7 @@
 import Alamofire
 
 public struct BookEndpoint: Endpoint, ResponseSerializable {
+    // TODO: Try to refactor this out
     private struct BookIDParameterEncoding: ParameterEncoding {
         func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
             var urlRequest = try urlRequest.asURLRequest()
