@@ -200,6 +200,7 @@
 				D0487171216A975C0085D22C /* Frameworks */,
 				D0487172216A975C0085D22C /* Resources */,
 				D0487190216A981F0085D22C /* SwiftLint */,
+				D016508921F6BC1100C2326D /* Copy frameworks */,
 			);
 			buildRules = (
 			);
@@ -284,6 +285,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		D016508921F6BC1100C2326D /* Copy frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/AlamofireNetworkActivityIndicator.framework",
+			);
+			name = "Copy frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
 		D0487190216A981F0085D22C /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
