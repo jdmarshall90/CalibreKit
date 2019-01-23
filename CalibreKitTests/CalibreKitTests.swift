@@ -37,14 +37,13 @@ class CalibreKitTests: XCTestCase {
 
     func test() {
         let theExpectation = expectation(description: "")
-        // swiftlint:disable unused_closure_parameter
         SetFieldsEndpoint(id: 1).hitService { response in
             print()
-            print(String(data: response.data!, encoding: .utf8))
+            print(String(data: response.data ?? Data(), encoding: .utf8) as Any)
             print()
             BookEndpoint(id: 1).hitService { response in
                 print()
-                print(String(data: response.data!, encoding: .utf8))
+                print(String(data: response.data ?? Data(), encoding: .utf8) as Any)
                 theExpectation.fulfill()
             }
         }
