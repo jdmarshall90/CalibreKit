@@ -23,11 +23,6 @@
 
 import Alamofire
 
-// TODO: Move this to separate file
-public struct SetFields: ResponseSerializable {
-    //
-}
-
 public struct SetFieldsEndpoint: Endpoint {
     public typealias ParsedResponse = SetFields
     public let method: HTTPMethod = .post
