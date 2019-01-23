@@ -46,7 +46,7 @@ public struct SetFieldsEndpoint: Endpoint {
         return [
             "changes": [
                 "title": "", //'Salem's LotAPPTESTTAKE2", // empty string does same thing as nil: sets it to "Unknown"
-//                "title_sort": nil, // all of these appear to be nillable, but I can't get this field to work ... ?
+//                "title_sort": nil, // all of these appear to be nillable, but I can't get this field to work ... ? come back to it
                 "rating": 8, // this seems to actually set this to half of what you send in. look into Calibre code to confirm
                 "authors": nil, // empty array, nil, and array of just "": sets it to "Unknown"
 //                "author_sort": ["something": "bob"], // can't get this one working? come back to it
@@ -59,7 +59,7 @@ public struct SetFieldsEndpoint: Endpoint {
                 "tags": nil // either a string, or string array works, nil or [] empties it out
             ],
             "loaded_book_ids": [
-//                1
+//                1 // this doesn't return the same data as the next call to fetch book details?
             ],
             "all_dirtied": true // what happens if you pass this to a server that doesn't support it (since it's a brand new field)? it works. is there a way to query server for calibre version?
         ]
