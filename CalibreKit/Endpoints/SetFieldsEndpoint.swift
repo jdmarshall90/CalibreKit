@@ -34,29 +34,78 @@ public struct SetFieldsEndpoint: Endpoint {
     
     // TODO: Does this URL come back from the /books/ endpoint's response?
     public var relativePath: String {
-        return "/cdb/set-fields/\(id)/"
+        return "/cdb/set-fields/\(book.id)/"
+    }
+    
+    public enum Change: Hashable {
+        public enum Property: Hashable {
+            case comments(String?)
+            case identifiers([String: String]) // TODO: Can this be statically typed to the `Book.Identifier` struct?
+            case languages([String]) // TODO: Can this be statically typed to the `Book.Language` struct?
+            case publishedDate(Date?)
+            case series([String: String]?) // TODO: Can this be statically typed to the `Book.Series` struct?
+            case tags([String])
+            case title(String?) // TODO: Can this be statically typed to the `Book.Title` struct?
+            
+            private static let dateFormatter: ISO8601DateFormatter = {
+                let formatter = ISO8601DateFormatter()
+                formatter.timeZone = TimeZone.current
+                return formatter
+            }()
+            
+            internal var parameters: Parameters? {
+                switch self {
+                case .comments(let comments):
+                    return ["comments": comments as Any]
+                case .identifiers(let identifiers):
+                    return identifiers
+                case .languages(let languages):
+                    return ["languages": languages]
+                case .publishedDate(let date):
+                    guard let date = date else { return nil }
+                    return ["pubdate": Property.dateFormatter.string(from: date)]
+                case .series(let series):
+                    return ["series": series?.keys.first as Any, "series_index": series?.values.first as Any]
+                case .tags(let tags):
+                    return ["tags": tags]
+                case .title(let title):
+                    return ["title": title as Any]
+                }
+            }
+        }
+        
+        case noChange
+        case change(Property)
+        
+        internal var parameters: Parameters? {
+            switch self {
+            case .noChange:
+                return nil
+            case .change(let property):
+                return property.parameters
+            }
+        }
     }
     
     public var parameters: Parameters? {
-//        9780345806796, Google
-        
-        let formatter = ISO8601DateFormatter()
-        formatter.timeZone = TimeZone.current
+        // TODO: Remove this comment
+//        9780345806796, Google -- original ISBN of book id 1 before you started testing out the API
         
         return [
+            // legend: //* means an enum case has been added for it. the ones without that, still need accounted for above
             "changes": [
-                "title": "", //'Salem's LotAPPTESTTAKE2", // empty string does same thing as nil: sets it to "Unknown"
+                "title": "", //* //'Salem's LotAPPTESTTAKE2", // empty string does same thing as nil: sets it to "Unknown"
 //                "title_sort": nil, // all of these appear to be nillable, but I can't get this field to work ... ? come back to it
                 "rating": 8, // this seems to actually set this to half of what you send in. look into Calibre code to confirm
                 "authors": nil, // empty array, nil, and array of just "": sets it to "Unknown"
 //                "author_sort": ["something": "bob"], // can't get this one working? come back to it
-                "series": "CalibreKit", // empty string does same thing as nil: nils it out
-                "series_index": nil, // ignored and set to nil if series is nil or empty. if this is nil and series is not, this is actually set to 1
-                "comments": "", // both nil and empty string set it to null
-                "pubdate": "", // both nil and empty string set it to null
-                "languages": "Telugu", // either a string, or string array works, non valid language or language code and it nulls it out
-                "identifiers": ["A": "a"], // seems to take anything as long as it's a [String: String] with keys and values not empty
-                "tags": nil // either a string, or string array works, nil or [] empties it out
+                "series": "CalibreKit", //* // empty string does same thing as nil: nils it out
+                "series_index": nil, //* // ignored and set to nil if series is nil or empty. if this is nil and series is not, this is actually set to 1
+                "comments": "", //* // both nil and empty string set it to null
+                "pubdate": "", //* // both nil and empty string set it to null
+                "languages": "Telugu", //* // either a string, or string array works, non valid language or language code and it nulls it out
+                "identifiers": ["aoeu": "aoeu"], //* // seems to take anything as long as it's a [String: String] with keys and values not empty
+                "tags": nil //* // either a string, or string array works, nil or [] empties it out
             ],
             "loaded_book_ids": [
 //                1 // this doesn't return the same data as the next call to fetch book details?
@@ -69,11 +118,11 @@ public struct SetFieldsEndpoint: Endpoint {
         return JSONEncoding.default
     }
     
-    // swiftlint:disable:next identifier_name
-    public let id: Int
-    
-    // swiftlint:disable:next identifier_name
-    public init(id: Int) {
-        self.id = id
+    public let book: BookEndpoint
+    public let changes: Set<Change>
+
+    public init(book: BookEndpoint, changes: Set<Change>) {
+        self.book = book
+        self.changes = changes
     }
 }
