@@ -31,10 +31,8 @@ public struct SetFieldsEndpoint: Endpoint {
         return "/cdb/set-fields/\(book.id)/"
     }
     
-    // TODO: Write documentation for this enum and all sub-types/cases/properties
     public enum Change: Hashable {
         public enum Property: Hashable {
-            
             // TODO: Need to figure this one out
             //                "title_sort": nil, // all of these appear to be nillable, but I can't get this field to work ... ? come back to it
             
