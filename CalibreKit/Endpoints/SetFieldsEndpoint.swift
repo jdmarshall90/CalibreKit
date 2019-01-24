@@ -35,10 +35,12 @@ public struct SetFieldsEndpoint: Endpoint {
     // TODO: Write documentation for this enum and all sub-types/cases/properties
     public enum Change: Hashable {
         public enum Property: Hashable {
+            case authors([String]) // TODO: Can this be statically typed to the `Book.Author` struct?
             case comments(String?)
             case identifiers([String: String]) // TODO: Can this be statically typed to the `Book.Identifier` struct?
             case languages([String]) // TODO: Can this be statically typed to the `Book.Language` struct?
             case publishedDate(Date?)
+            case rating(Int) // TODO: Can this be statically typed to the `Book.Rating` struct?
             case series([String: String]?) // TODO: Can this be statically typed to the `Book.Series` struct?
             case tags([String])
             case title(String?) // TODO: Can this be statically typed to the `Book.Title` struct?
@@ -51,6 +53,8 @@ public struct SetFieldsEndpoint: Endpoint {
             
             internal var parameters: Parameters? {
                 switch self {
+                case .authors(let authors):
+                    return ["authors": authors]
                 case .comments(let comments):
                     return ["comments": comments as Any]
                 case .identifiers(let identifiers):
@@ -60,6 +64,8 @@ public struct SetFieldsEndpoint: Endpoint {
                 case .publishedDate(let date):
                     guard let date = date else { return nil }
                     return ["pubdate": Property.dateFormatter.string(from: date)]
+                case .rating(let rating):
+                    return ["rating": rating]
                 case .series(let series):
                     return ["series": series?.keys.first as Any, "series_index": series?.values.first as Any]
                 case .tags(let tags):
@@ -90,20 +96,15 @@ public struct SetFieldsEndpoint: Endpoint {
         // TODO: Refactor this to reference `self.changes`
         return [
             "changes": [
-                "title": "", //'Salem's LotAPPTESTTAKE2", // empty string does same thing as nil: sets it to "Unknown"
-                
                 // TODO: Need to figure this one out
 //                "title_sort": nil, // all of these appear to be nillable, but I can't get this field to work ... ? come back to it
-                
-                // TODO: Create a matching Change.Property enum case for this one
-                "rating": 8, // this seems to actually set this to half of what you send in. look into Calibre code to confirm
-                
-                // TODO: Create a matching Change.Property enum case for this one
-                "authors": nil, // empty array, nil, and array of just "": sets it to "Unknown"
                 
                 // TODO: Need to figure this one out
 //                "author_sort": ["something": "bob"], // can't get this one working? come back to it
                 
+                "rating": 8, // this seems to actually set this to half of what you send in. look into Calibre code to confirm
+                "title": "", //'Salem's LotAPPTESTTAKE2", // empty string does same thing as nil: sets it to "Unknown"
+                "authors": nil, // empty array, nil, and array of just "": sets it to "Unknown"
                 "series": "CalibreKit", //* // empty string does same thing as nil: nils it out
                 "series_index": nil, //* // ignored and set to nil if series is nil or empty. if this is nil and series is not, this is actually set to 1
                 "comments": "", //* // both nil and empty string set it to null
