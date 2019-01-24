@@ -35,15 +35,15 @@ public struct SetFieldsEndpoint: Endpoint {
     // TODO: Write documentation for this enum and all sub-types/cases/properties
     public enum Change: Hashable {
         public enum Property: Hashable {
-            case authors([String]) // TODO: Can this be statically typed to the `Book.Author` struct?
+            case authors([Book.Author])
             case comments(String?)
-            case identifiers([String: String]) // TODO: Can this be statically typed to the `Book.Identifier` struct?
-            case languages([String]) // TODO: Can this be statically typed to the `Book.Language` struct?
+            case identifiers([Book.Identifier])
+            case languages([Book.Language])
             case publishedDate(Date?)
-            case rating(Int) // TODO: Can this be statically typed to the `Book.Rating` struct?
-            case series([String: String]?) // TODO: Can this be statically typed to the `Book.Series` struct?
+            case rating(Book.Rating)
+            case series(Book.Series?)
             case tags([String])
-            case title(String?) // TODO: Can this be statically typed to the `Book.Title` struct?
+            case title(Book.Title?)
             
             private static let dateFormatter: ISO8601DateFormatter = {
                 let formatter = ISO8601DateFormatter()
@@ -54,24 +54,30 @@ public struct SetFieldsEndpoint: Endpoint {
             internal var parameters: Parameters? {
                 switch self {
                 case .authors(let authors):
-                    return ["authors": authors]
+                    return ["authors": authors.map { $0.name }]
                 case .comments(let comments):
                     return ["comments": comments as Any]
                 case .identifiers(let identifiers):
-                    return identifiers
+                    return identifiers.reduce(
+                        into: [:], { result, next in
+                            result[next.displayValue] = next.uniqueID
+                        }
+                    )
                 case .languages(let languages):
-                    return ["languages": languages]
+                    return ["languages": languages.map { $0.displayValue }]
                 case .publishedDate(let date):
                     guard let date = date else { return nil }
                     return ["pubdate": Property.dateFormatter.string(from: date)]
                 case .rating(let rating):
-                    return ["rating": rating]
+                    // this seems to actually set this to half of what you send in
+                    return ["rating": rating.rawValue * 2]
                 case .series(let series):
-                    return ["series": series?.keys.first as Any, "series_index": series?.values.first as Any]
+                    guard let series = series else { return nil }
+                    return ["series": series.name, "series_index": series.index]
                 case .tags(let tags):
                     return ["tags": tags]
                 case .title(let title):
-                    return ["title": title as Any]
+                    return ["title": title?.name as Any]
                 }
             }
         }
