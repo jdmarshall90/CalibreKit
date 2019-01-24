@@ -34,19 +34,4 @@ class CalibreKitTests: XCTestCase {
         super.tearDown()
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func test() {
-        let theExpectation = expectation(description: "")
-        SetFieldsEndpoint(id: 1).hitService { response in
-            print()
-            print(String(data: response.data ?? Data(), encoding: .utf8) as Any)
-            print()
-            BookEndpoint(id: 1).hitService { response in
-                print()
-                print(String(data: response.data ?? Data(), encoding: .utf8) as Any)
-                theExpectation.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 3, handler: nil)
-    }
 }
