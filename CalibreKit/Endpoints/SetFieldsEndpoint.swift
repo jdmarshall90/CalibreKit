@@ -27,7 +27,6 @@ public struct SetFieldsEndpoint: Endpoint {
     public typealias ParsedResponse = SetFields
     public let method: HTTPMethod = .post
     
-    // TODO: Does this URL come back from the /books/ endpoint's response?
     public var relativePath: String {
         return "/cdb/set-fields/\(book.id)/"
     }
@@ -35,6 +34,13 @@ public struct SetFieldsEndpoint: Endpoint {
     // TODO: Write documentation for this enum and all sub-types/cases/properties
     public enum Change: Hashable {
         public enum Property: Hashable {
+            
+            // TODO: Need to figure this one out
+            //                "title_sort": nil, // all of these appear to be nillable, but I can't get this field to work ... ? come back to it
+            
+            // TODO: Need to figure this one out
+            //                "author_sort": ["something": "bob"], // can't get this one working? come back to it
+            
             case authors([Book.Author])
             case comments(String?)
             case identifiers([Book.Identifier])
@@ -96,37 +102,12 @@ public struct SetFieldsEndpoint: Endpoint {
     }
     
     public var parameters: Parameters? {
-        // TODO: Remove this comment after you fix the data for this book
-//        9780345806796, Google -- original ISBN of book id 1 before you started testing out the API
+        let changes = self.changes.map { $0.parameters }
+        let loadedBookIDs = loadedBooks.map { $0.id }
         
-        // TODO: Refactor this to reference `self.changes`
         return [
-            "changes": [
-                // TODO: Need to figure this one out
-//                "title_sort": nil, // all of these appear to be nillable, but I can't get this field to work ... ? come back to it
-                
-                // TODO: Need to figure this one out
-//                "author_sort": ["something": "bob"], // can't get this one working? come back to it
-                
-                "rating": 8, // this seems to actually set this to half of what you send in. look into Calibre code to confirm
-                "title": "", //'Salem's LotAPPTESTTAKE2", // empty string does same thing as nil: sets it to "Unknown"
-                "authors": nil, // empty array, nil, and array of just "": sets it to "Unknown"
-                "series": "CalibreKit", //* // empty string does same thing as nil: nils it out
-                "series_index": nil, //* // ignored and set to nil if series is nil or empty. if this is nil and series is not, this is actually set to 1
-                "comments": "", //* // both nil and empty string set it to null
-                "pubdate": "", //* // both nil and empty string set it to null
-                "languages": "Telugu", //* // either a string, or string array works, non valid language or language code and it nulls it out
-                "identifiers": ["aoeu": "aoeu"], //* // seems to take anything as long as it's a [String: String] with keys and values not empty
-                "tags": nil //* // either a string, or string array works, nil or [] empties it out
-            ],
-            
-            // TODO: Need a way for client to pass this in
-            "loaded_book_ids": [
-//                1 // this doesn't return the same data as the next call to fetch book details?
-            ],
-            
-            // TODO: Need a way for client to pass this in?
-            "all_dirtied": true // what happens if you pass this to a server that doesn't support it (since it's a brand new field)? it works. is there a way to query server for calibre version?
+            "changes": changes,
+            "loaded_book_ids": loadedBookIDs
         ]
     }
     
@@ -136,9 +117,11 @@ public struct SetFieldsEndpoint: Endpoint {
     
     public let book: BookEndpoint
     public let changes: Set<Change>
+    public let loadedBooks: [Book]
 
-    public init(book: BookEndpoint, changes: Set<Change>) {
+    public init(book: BookEndpoint, changes: Set<Change>, loadedBooks: [Book] = []) {
         self.book = book
         self.changes = changes
+        self.loadedBooks = loadedBooks
     }
 }
