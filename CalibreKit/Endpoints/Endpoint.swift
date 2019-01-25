@@ -44,7 +44,7 @@ public extension Endpoint {
     
     public func absoluteURL() throws -> URL {
         guard let baseURL = CalibreKitConfiguration.configuration?.url else {
-            throw CalibreError.message("Go into settings and set your Calibre© Content Server URL")
+            throw CalibreError.message("Go into settings and set your Calibre© Content Server configuration")
         }
         // swiftlint:disable:next force_unwrapping
         return URL(string: relativePath, relativeTo: baseURL)!
