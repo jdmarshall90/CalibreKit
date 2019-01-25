@@ -39,6 +39,8 @@ public struct SetFieldsEndpoint: Endpoint {
             // TODO: Need to figure this one out
             //                "author_sort": ["something": "bob"], // can't get this one working? come back to it
             
+            // TODO: need to be able to set the cover image
+            
             case authors([Book.Author])
             case comments(String?)
             case identifiers([Book.Identifier])
