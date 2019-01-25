@@ -180,6 +180,11 @@ public struct Book: ResponseSerializable {
     public struct Title: Hashable {
         public let name: String
         public let sort: String
+        
+        public init(name: String, sort: String) {
+            self.name = name
+            self.sort = sort
+        }
     }
     
     public enum Rating: Int, ResponseSerializable, CaseIterable, Hashable {
