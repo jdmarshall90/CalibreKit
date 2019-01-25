@@ -71,7 +71,7 @@ public struct Book: ResponseSerializable {
         }
     }
     
-    public enum Identifier {
+    public enum Identifier: Hashable {
         case isbn(String)
         case google(String)
         case other(source: String, uniqueID: String)
@@ -177,12 +177,12 @@ public struct Book: ResponseSerializable {
         }
     }
     
-    public struct Title {
+    public struct Title: Hashable {
         public let name: String
         public let sort: String
     }
     
-    public enum Rating: Int, ResponseSerializable, CaseIterable {
+    public enum Rating: Int, ResponseSerializable, CaseIterable, Hashable {
         case unrated
         case oneStar
         case twoStars
@@ -217,7 +217,7 @@ public struct Book: ResponseSerializable {
         }
     }
     
-    public struct Series {
+    public struct Series: Hashable {
         private static let seriesIndexFormatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.minimumIntegerDigits = 1
