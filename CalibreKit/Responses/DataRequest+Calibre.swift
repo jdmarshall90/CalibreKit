@@ -41,6 +41,6 @@ internal extension DataRequest {
             }
         }
         
-        return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
+        return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler).validate()
     }
 }
