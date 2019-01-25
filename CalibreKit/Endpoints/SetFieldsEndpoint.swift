@@ -89,39 +89,54 @@ public struct SetFieldsEndpoint: Endpoint {
         }
         
         case noChange
-        case change(Property)
+        case change(Set<Property>)
         
-        internal var parameters: Parameters? {
+        internal var parameters: [Parameters] {
             switch self {
             case .noChange:
-                return nil
+                return []
             case .change(let property):
-                return property.parameters
+                return property.compactMap { $0.parameters }
             }
         }
     }
     
     public var parameters: Parameters? {
-        let changes = self.changes.map { $0.parameters }
-        let loadedBookIDs = loadedBooks.map { $0.id }
-        
-        return [
-            "changes": changes,
-            "loaded_book_ids": loadedBookIDs
-        ]
+        switch change {
+        case .change(let changes):
+            let changes = changes.compactMap { $0.parameters }
+            
+            // TODO: Clean this up
+            let flattenedDictionary = changes
+                .flatMap { $0 }
+                .reduce([String: Any]()) { dict, tuple in
+                    var mutableDict = dict
+                    mutableDict.updateValue(tuple.1, forKey: tuple.0)
+                    return mutableDict
+                }
+            
+            let loadedBookIDs = loadedBooks.map { $0.id }
+            
+            return [
+                "changes": flattenedDictionary,
+                "loaded_book_ids": loadedBookIDs
+            ]
+        case .noChange:
+            return nil
+        }
     }
     
     public var encoding: ParameterEncoding {
         return JSONEncoding.default
     }
     
-    public let book: BookEndpoint
-    public let changes: Set<Change>
+    public let book: Book
+    public let change: Change
     public let loadedBooks: [Book]
-
-    public init(book: BookEndpoint, changes: Set<Change>, loadedBooks: [Book] = []) {
+    
+    public init(book: Book, change: Change, loadedBooks: [Book] = []) {
         self.book = book
-        self.changes = changes
+        self.change = change
         self.loadedBooks = loadedBooks
     }
 }
