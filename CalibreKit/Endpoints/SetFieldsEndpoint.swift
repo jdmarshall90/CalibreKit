@@ -140,23 +140,21 @@ public struct SetFieldsEndpoint: Endpoint {
         self.loadedBooks = loadedBooks
     }
     
-    // TODO: Clean up these 2 `transform`s
     public func transform(responseData: Data) throws -> [Book] {
-        // swiftlint:disable force_cast
-        let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
+        let json = try JSONSerialization.jsonObject(with: responseData) as? [String: Any] ?? [:]
         let books = try json.keys.map { try transform(bookDictionary: [$0: json[$0] as Any]) }
         return books
     }
     
     private func transform(bookDictionary: [String: Any]) throws -> Book {
-        let bookID = Int(bookDictionary.keys.first!)!
-        let bookMetadata = bookDictionary.values.first as! [String: Any]
+        let bookID = Int(bookDictionary.keys.first ?? "")
+        let bookMetadata = bookDictionary.values.first as? [String: Any] ?? [:]
         var modifiedResponseJSON = bookMetadata
         
         // TODO: Use the coding keys directly, stop hardcoding the string keys
         modifiedResponseJSON["application_id"] = bookID
         
-        let authors = bookMetadata["authors"] as! [String]
+        let authors = bookMetadata["authors"] as? [String] ?? []
         
         // TODO: Come back to this after you have implemented authorSort being an input to this endpoint
         // comes back as either "Unknown" or array separated by &
