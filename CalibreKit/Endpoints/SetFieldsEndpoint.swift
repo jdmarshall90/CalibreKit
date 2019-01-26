@@ -107,7 +107,6 @@ public struct SetFieldsEndpoint: Endpoint {
         case .change(let changes):
             let changes = changes.compactMap { $0.parameters }
             
-            // TODO: Clean this up
             let flattenedDictionary = changes
                 .flatMap { $0 }
                 .reduce([String: Any]()) { dict, tuple in
