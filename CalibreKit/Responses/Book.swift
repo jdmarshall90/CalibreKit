@@ -255,7 +255,7 @@ public struct Book: ResponseSerializable {
         let rawAuthorSortMap = try container.decode([String: String].self, forKey: .authorSortMap)
         self.authors = rawAuthors.map { Author(name: $0, sort: rawAuthorSortMap[$0] ?? $0) }
         
-        self.comments = try container.decode(Optional<String>.self, forKey: .comments)
+        self.comments = try container.decodeIfPresent(String.self, forKey: .comments)
         self.cover = try container.decode(CoverEndpoint.self, forKey: .cover)
         
         let rawIdentifiers = try container.decode([String: String].self, forKey: .identifiers)
@@ -266,14 +266,14 @@ public struct Book: ResponseSerializable {
         self.tags = try container.decode([String].self, forKey: .tags)
         
         let rawTitle = try container.decode(String.self, forKey: .title)
-        let rawTitleSort = try container.decode(Optional<String>.self, forKey: .titleSort)
+        let rawTitleSort = try container.decodeIfPresent(String.self, forKey: .titleSort)
         self.title = Title(name: rawTitle, sort: rawTitleSort ?? rawTitle)
         
         self.thumbnail = try container.decode(ThumbnailEndpoint.self, forKey: .thumbnail)
         
         self.publishedDate = try container.decodeDate(forKey: .publishedDate)
         do {
-            self.rating = try container.decode(Rating.self, forKey: .rating)
+            self.rating = try container.decodeIfPresent(Rating.self, forKey: .rating) ?? .unrated
         } catch let error as CalibreError {
             throw CalibreError.message("Error in book \"\(title.name)\"'s rating: " + error.localizedDescription)
         }
@@ -295,7 +295,7 @@ private extension KeyedDecodingContainer where Key == Book.CodingKeys {
     }()
     
     func decodeDate(forKey key: Key) throws -> Date? {
-        let rawDate = try decode(String.self, forKey: key)
+        guard let rawDate = try decodeIfPresent(String.self, forKey: key) else { return nil }
         let date = KeyedDecodingContainer<K>.dateFormatter.date(from: rawDate)
         return date
     }
