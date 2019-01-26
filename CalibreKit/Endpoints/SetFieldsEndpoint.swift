@@ -24,7 +24,7 @@
 import Alamofire
 
 public struct SetFieldsEndpoint: Endpoint {
-    public typealias ParsedResponse = Book
+    public typealias ParsedResponse = [Book]
     public let method: HTTPMethod = .post
     
     public var relativePath: String {
@@ -140,23 +140,28 @@ public struct SetFieldsEndpoint: Endpoint {
         self.loadedBooks = loadedBooks
     }
     
-    // TODO: This actually needs to be an array of books ...
-    public func transform(responseData: Data) throws -> Book {
+    public func transform(responseData: Data) throws -> [Book] {
         // swiftlint:disable force_cast
         let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
-        let bookID = Int(json.keys.first!)!
-        let bookMetadata = json.values.first as! [String: Any]
+        let books = try json.keys.map { try transform(bookDictionary: [$0: json[$0] as Any]) }
+        return books
+    }
+    
+    private func transform(bookDictionary: [String: Any]) throws -> Book {
+        // TODO: clean this up
+        let bookID = Int(bookDictionary.keys.first!)!
+        let bookMetadata = bookDictionary.values.first as! [String: Any]
         var modifiedResponseJSON = bookMetadata
         
-        // TODO: if these work, use the coding keys directly and don't hardcode the string keys
+        // TODO: Use the coding keys directly, stop hardcoding the string keys
         modifiedResponseJSON["application_id"] = bookID
         
         let authors = bookMetadata["authors"] as! [String]
         
         // TODO: Come back to this after you have implemented authorSort being an input to this endpoint
         // comes back as either "Unknown" or array separated by &
-//        let authorSort = bookMetadata["author_sort"] as! String
-//        let authorSortArray = authorSort.split(separator: "&")
+        //        let authorSort = bookMetadata["author_sort"] as! String
+        //        let authorSortArray = authorSort.split(separator: "&")
         modifiedResponseJSON["author_sort"] = nil
         modifiedResponseJSON["author_sort_map"] = Dictionary(uniqueKeysWithValues: zip(authors, authors))
         
@@ -173,7 +178,7 @@ public struct SetFieldsEndpoint: Endpoint {
         }
         
         let modifiedResponseData = try JSONSerialization.data(withJSONObject: modifiedResponseJSON)
-        let parsedResponse = try JSONDecoder().decode(ParsedResponse.self, from: modifiedResponseData)
+        let parsedResponse = try JSONDecoder().decode(Book.self, from: modifiedResponseData)
         return parsedResponse
     }
 }
