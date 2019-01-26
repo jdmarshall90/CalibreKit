@@ -64,11 +64,12 @@ public struct SetFieldsEndpoint: Endpoint {
                 case .comments(let comments):
                     return ["comments": comments as Any]
                 case .identifiers(let identifiers):
-                    return identifiers.reduce(
+                    let identifiersJSON = identifiers.reduce(
                         into: [:], { result, next in
-                            result[next.displayValue] = next.uniqueID
+                            result[next.displayValue.lowercased()] = next.uniqueID
                         }
                     )
+                    return ["identifiers": identifiersJSON]
                 case .languages(let languages):
                     return ["languages": languages.map { $0.displayValue }]
                 case .publishedDate(let date):
