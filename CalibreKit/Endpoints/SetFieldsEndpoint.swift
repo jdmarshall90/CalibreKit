@@ -24,7 +24,7 @@
 import Alamofire
 
 public struct SetFieldsEndpoint: Endpoint {
-    public typealias ParsedResponse = SetFields
+    public typealias ParsedResponse = [Book]
     public let method: HTTPMethod = .post
     
     public var relativePath: String {
@@ -64,11 +64,12 @@ public struct SetFieldsEndpoint: Endpoint {
                 case .comments(let comments):
                     return ["comments": comments as Any]
                 case .identifiers(let identifiers):
-                    return identifiers.reduce(
+                    let identifiersJSON = identifiers.reduce(
                         into: [:], { result, next in
-                            result[next.displayValue] = next.uniqueID
+                            result[next.displayValue.lowercased()] = next.uniqueID
                         }
                     )
+                    return ["identifiers": identifiersJSON]
                 case .languages(let languages):
                     return ["languages": languages.map { $0.displayValue }]
                 case .publishedDate(let date):
@@ -106,7 +107,6 @@ public struct SetFieldsEndpoint: Endpoint {
         case .change(let changes):
             let changes = changes.compactMap { $0.parameters }
             
-            // TODO: Clean this up
             let flattenedDictionary = changes
                 .flatMap { $0 }
                 .reduce([String: Any]()) { dict, tuple in
@@ -138,5 +138,48 @@ public struct SetFieldsEndpoint: Endpoint {
         self.book = book
         self.change = change
         self.loadedBooks = loadedBooks
+    }
+    
+    // TODO: Clean up these 2 `transform`s
+    public func transform(responseData: Data) throws -> [Book] {
+        // swiftlint:disable force_cast
+        let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
+        let books = try json.keys.map { try transform(bookDictionary: [$0: json[$0] as Any]) }
+        return books
+    }
+    
+    private func transform(bookDictionary: [String: Any]) throws -> Book {
+        let bookID = Int(bookDictionary.keys.first!)!
+        let bookMetadata = bookDictionary.values.first as! [String: Any]
+        var modifiedResponseJSON = bookMetadata
+        
+        // TODO: Use the coding keys directly, stop hardcoding the string keys
+        modifiedResponseJSON["application_id"] = bookID
+        
+        let authors = bookMetadata["authors"] as! [String]
+        
+        // TODO: Come back to this after you have implemented authorSort being an input to this endpoint
+        // comes back as either "Unknown" or array separated by &
+        //        let authorSort = bookMetadata["author_sort"] as! String
+        //        let authorSortArray = authorSort.split(separator: "&")
+        modifiedResponseJSON["author_sort"] = nil
+        modifiedResponseJSON["author_sort_map"] = Dictionary(uniqueKeysWithValues: zip(authors, authors))
+        
+        modifiedResponseJSON["cover"] = book.cover.relativePath
+        modifiedResponseJSON["thumbnail"] = book.thumbnail.relativePath
+        
+        let titleSort = bookMetadata["sort"]
+        // TODO: Make sure this still works after you have implemented titleSort being an input to this endpoint
+        modifiedResponseJSON["title_sort"] = titleSort
+        
+        if let rating = modifiedResponseJSON["rating"] as? Int {
+            // Just like changing the rating seems to actually set this to half of what you send in, this
+            // particular response is double what the actual rating is.
+            modifiedResponseJSON["rating"] = rating / 2
+        }
+        
+        let modifiedResponseData = try JSONSerialization.data(withJSONObject: modifiedResponseJSON)
+        let parsedResponse = try JSONDecoder().decode(Book.self, from: modifiedResponseData)
+        return parsedResponse
     }
 }
