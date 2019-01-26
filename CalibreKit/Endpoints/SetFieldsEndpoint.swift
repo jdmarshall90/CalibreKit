@@ -173,7 +173,7 @@ public struct SetFieldsEndpoint: Endpoint {
         modifiedResponseJSON["title_sort"] = titleSort
         
         if let rating = modifiedResponseJSON["rating"] as? Int {
-            // Just like changing the rating this seems to actually set this to half of what you send in, this
+            // Just like changing the rating seems to actually set this to half of what you send in, this
             // particular response is double what the actual rating is.
             modifiedResponseJSON["rating"] = rating / 2
         }
