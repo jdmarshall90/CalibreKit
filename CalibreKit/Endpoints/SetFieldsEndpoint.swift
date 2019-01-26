@@ -140,6 +140,7 @@ public struct SetFieldsEndpoint: Endpoint {
         self.loadedBooks = loadedBooks
     }
     
+    // TODO: Clean up these 2 `transform`s
     public func transform(responseData: Data) throws -> [Book] {
         // swiftlint:disable force_cast
         let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
@@ -148,7 +149,6 @@ public struct SetFieldsEndpoint: Endpoint {
     }
     
     private func transform(bookDictionary: [String: Any]) throws -> Book {
-        // TODO: clean this up
         let bookID = Int(bookDictionary.keys.first!)!
         let bookMetadata = bookDictionary.values.first as! [String: Any]
         var modifiedResponseJSON = bookMetadata
@@ -169,6 +169,7 @@ public struct SetFieldsEndpoint: Endpoint {
         modifiedResponseJSON["thumbnail"] = book.thumbnail.relativePath
         
         let titleSort = bookMetadata["sort"]
+        // TODO: Make sure this still works after you have implemented titleSort being an input to this endpoint
         modifiedResponseJSON["title_sort"] = titleSort
         
         if let rating = modifiedResponseJSON["rating"] as? Int {
