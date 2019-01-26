@@ -24,7 +24,7 @@
 import Alamofire
 
 public struct SetFieldsEndpoint: Endpoint {
-    public typealias ParsedResponse = SetFields
+    public typealias ParsedResponse = Book
     public let method: HTTPMethod = .post
     
     public var relativePath: String {
@@ -138,5 +138,42 @@ public struct SetFieldsEndpoint: Endpoint {
         self.book = book
         self.change = change
         self.loadedBooks = loadedBooks
+    }
+    
+    // TODO: This actually needs to be an array of books ...
+    public func transform(responseData: Data) throws -> Book {
+        // swiftlint:disable force_cast
+        let json = try JSONSerialization.jsonObject(with: responseData) as! [String: Any]
+        let bookID = Int(json.keys.first!)!
+        let bookMetadata = json.values.first as! [String: Any]
+        var modifiedResponseJSON = bookMetadata
+        
+        // TODO: if these work, use the coding keys directly and don't hardcode the string keys
+        modifiedResponseJSON["application_id"] = bookID
+        
+        let authors = bookMetadata["authors"] as! [String]
+        
+        // TODO: Come back to this after you have implemented authorSort being an input to this endpoint
+        // comes back as either "Unknown" or array separated by &
+//        let authorSort = bookMetadata["author_sort"] as! String
+//        let authorSortArray = authorSort.split(separator: "&")
+        modifiedResponseJSON["author_sort"] = nil
+        modifiedResponseJSON["author_sort_map"] = Dictionary(uniqueKeysWithValues: zip(authors, authors))
+        
+        modifiedResponseJSON["cover"] = book.cover.relativePath
+        modifiedResponseJSON["thumbnail"] = book.thumbnail.relativePath
+        
+        let titleSort = bookMetadata["sort"]
+        modifiedResponseJSON["title_sort"] = titleSort
+        
+        if let rating = modifiedResponseJSON["rating"] as? Int {
+            // Just like changing the rating this seems to actually set this to half of what you send in, this
+            // particular response is double what the actual rating is.
+            modifiedResponseJSON["rating"] = rating / 2
+        }
+        
+        let modifiedResponseData = try JSONSerialization.data(withJSONObject: modifiedResponseJSON)
+        let parsedResponse = try JSONDecoder().decode(ParsedResponse.self, from: modifiedResponseData)
+        return parsedResponse
     }
 }
