@@ -87,7 +87,10 @@ public struct SetFieldsEndpoint: Endpoint {
                 case .tags(let tags):
                     return ["tags": tags]
                 case .title(let title):
-                    return ["title": title?.name as Any]
+                    return [
+                        "title": title?.name as Any,
+                        "sort": title?.sort as Any
+                    ]
                 }
             }
         }
