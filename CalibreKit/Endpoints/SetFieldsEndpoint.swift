@@ -162,12 +162,12 @@ public struct SetFieldsEndpoint: Endpoint {
         
         let authors = bookMetadata["authors"] as? [String] ?? []
         
-        // TODO: Come back to this after you have implemented authorSort being an input to this endpoint
+        let authorSort = bookMetadata["author_sort"] as? String
         // comes back as either "Unknown" or array separated by &
-        //        let authorSort = bookMetadata["author_sort"] as! String
-        //        let authorSortArray = authorSort.split(separator: "&")
+        let authorSortArray = authorSort?.split(separator: "&").map { $0.trimmingCharacters(in: .whitespaces) } ?? []
+        
         modifiedResponseJSON["author_sort"] = nil
-        modifiedResponseJSON["author_sort_map"] = Dictionary(uniqueKeysWithValues: zip(authors, authors))
+        modifiedResponseJSON["author_sort_map"] = Dictionary(uniqueKeysWithValues: zip(authors, authorSortArray))
         
         modifiedResponseJSON["cover"] = book.cover.relativePath
         modifiedResponseJSON["thumbnail"] = book.thumbnail.relativePath
