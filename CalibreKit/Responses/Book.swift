@@ -24,7 +24,7 @@
 import Foundation
 
 public struct Book: ResponseSerializable {
-    fileprivate enum CodingKeys: String, CodingKey {
+    internal enum CodingKeys: String, CodingKey {
         // swiftlint:disable:next identifier_name
         case id = "application_id"
         case addedOn = "timestamp"
