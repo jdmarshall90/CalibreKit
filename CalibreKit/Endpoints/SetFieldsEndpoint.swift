@@ -33,14 +33,6 @@ public struct SetFieldsEndpoint: Endpoint {
     
     public enum Change: Hashable {
         public enum Property: Hashable {
-            // TODO: Need to figure this one out
-            //                "title_sort": nil, // all of these appear to be nillable, but I can't get this field to work ... ? come back to it
-            
-            // TODO: Need to figure this one out
-            //                "author_sort": ["something": "bob"], // can't get this one working? come back to it
-            
-            // TODO: need to be able to set the cover image
-            
             case authors([Book.Author])
             case comments(String?)
             case cover(Data?)
@@ -173,7 +165,6 @@ public struct SetFieldsEndpoint: Endpoint {
         modifiedResponseJSON["thumbnail"] = book.thumbnail.relativePath
         
         let titleSort = bookMetadata["sort"]
-        // TODO: Make sure this still works after you have implemented titleSort being an input to this endpoint
         modifiedResponseJSON["title_sort"] = titleSort
         
         if let rating = modifiedResponseJSON["rating"] as? Int {
