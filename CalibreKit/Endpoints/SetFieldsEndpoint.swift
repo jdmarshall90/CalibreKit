@@ -43,6 +43,7 @@ public struct SetFieldsEndpoint: Endpoint {
             
             case authors([Book.Author])
             case comments(String?)
+            case cover(Data?)
             case identifiers([Book.Identifier])
             case languages([Book.Language])
             case publishedDate(Date?)
@@ -63,6 +64,8 @@ public struct SetFieldsEndpoint: Endpoint {
                     return ["authors": authors.map { $0.name }]
                 case .comments(let comments):
                     return ["comments": comments as Any]
+                case .cover(let coverData):
+                    return ["cover": coverData?.base64EncodedString() as Any]
                 case .identifiers(let identifiers):
                     let identifiersJSON = identifiers.reduce(
                         into: [:], { result, next in
