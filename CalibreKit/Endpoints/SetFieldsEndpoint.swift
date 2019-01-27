@@ -32,96 +32,77 @@ public struct SetFieldsEndpoint: Endpoint {
     }
     
     public enum Change: Hashable {
-        public enum Property: Hashable {
-            case authors([Book.Author])
-            case comments(String?)
-            case cover(Data?)
-            case identifiers([Book.Identifier])
-            case languages([Book.Language])
-            case publishedDate(Date?)
-            case rating(Book.Rating)
-            case series(Book.Series?)
-            case tags([String])
-            case title(Book.Title?)
-            
-            private static let dateFormatter: ISO8601DateFormatter = {
-                let formatter = ISO8601DateFormatter()
-                formatter.timeZone = TimeZone.current
-                return formatter
-            }()
-            
-            internal var parameters: Parameters? {
-                switch self {
-                case .authors(let authors):
-                    return ["authors": authors.map { $0.name }]
-                case .comments(let comments):
-                    return ["comments": comments as Any]
-                case .cover(let coverData):
-                    return ["cover": coverData?.base64EncodedString() as Any]
-                case .identifiers(let identifiers):
-                    let identifiersJSON = identifiers.reduce(
-                        into: [:], { result, next in
-                            result[next.displayValue.lowercased()] = next.uniqueID
-                        }
-                    )
-                    return ["identifiers": identifiersJSON]
-                case .languages(let languages):
-                    return ["languages": languages.map { $0.displayValue }]
-                case .publishedDate(let date):
-                    guard let date = date else { return nil }
-                    return ["pubdate": Property.dateFormatter.string(from: date)]
-                case .rating(let rating):
-                    // this seems to actually set this to half of what you send in
-                    return ["rating": rating.rawValue * 2]
-                case .series(let series):
-                    guard let series = series else { return nil }
-                    return ["series": series.name, "series_index": series.index]
-                case .tags(let tags):
-                    return ["tags": tags]
-                case .title(let title):
-                    return [
-                        "title": title?.name as Any,
-                        "sort": title?.sort as Any
-                    ]
-                }
-            }
-        }
+        case authors([Book.Author])
+        case comments(String?)
+        case cover(Data?)
+        case identifiers([Book.Identifier])
+        case languages([Book.Language])
+        case publishedDate(Date?)
+        case rating(Book.Rating)
+        case series(Book.Series?)
+        case tags([String])
+        case title(Book.Title?)
         
-        case noChange
-        case change(Set<Property>)
+        private static let dateFormatter: ISO8601DateFormatter = {
+            let formatter = ISO8601DateFormatter()
+            formatter.timeZone = TimeZone.current
+            return formatter
+        }()
         
-        internal var parameters: [Parameters] {
+        internal var parameters: Parameters? {
             switch self {
-            case .noChange:
-                return []
-            case .change(let property):
-                return property.compactMap { $0.parameters }
+            case .authors(let authors):
+                return ["authors": authors.map { $0.name }]
+            case .comments(let comments):
+                return ["comments": comments as Any]
+            case .cover(let coverData):
+                return ["cover": coverData?.base64EncodedString() as Any]
+            case .identifiers(let identifiers):
+                let identifiersJSON = identifiers.reduce(
+                    into: [:], { result, next in
+                        result[next.displayValue.lowercased()] = next.uniqueID
+                    }
+                )
+                return ["identifiers": identifiersJSON]
+            case .languages(let languages):
+                return ["languages": languages.map { $0.displayValue }]
+            case .publishedDate(let date):
+                guard let date = date else { return nil }
+                return ["pubdate": Change.dateFormatter.string(from: date)]
+            case .rating(let rating):
+                // this seems to actually set this to half of what you send in
+                return ["rating": rating.rawValue * 2]
+            case .series(let series):
+                guard let series = series else { return nil }
+                return ["series": series.name, "series_index": series.index]
+            case .tags(let tags):
+                return ["tags": tags]
+            case .title(let title):
+                return [
+                    "title": title?.name as Any,
+                    "sort": title?.sort as Any
+                ]
             }
         }
     }
     
     public var parameters: Parameters? {
-        switch change {
-        case .change(let changes):
-            let changes = changes.compactMap { $0.parameters }
-            
-            let flattenedDictionary = changes
-                .flatMap { $0 }
-                .reduce([String: Any]()) { dict, tuple in
-                    var mutableDict = dict
-                    mutableDict.updateValue(tuple.1, forKey: tuple.0)
-                    return mutableDict
-                }
-            
-            let loadedBookIDs = loadedBooks.map { $0.id }
-            
-            return [
-                "changes": flattenedDictionary,
-                "loaded_book_ids": loadedBookIDs
-            ]
-        case .noChange:
-            return nil
-        }
+        let changes = self.changes.compactMap { $0.parameters }.compactMap { $0 }
+        
+        let flattenedDictionary = changes
+            .flatMap { $0 }
+            .reduce([String: Any]()) { dict, tuple in
+                var mutableDict = dict
+                mutableDict.updateValue(tuple.1, forKey: tuple.0)
+                return mutableDict
+            }
+        
+        let loadedBookIDs = loadedBooks.map { $0.id }
+        
+        return [
+            "changes": flattenedDictionary,
+            "loaded_book_ids": loadedBookIDs
+        ]
     }
     
     public var encoding: ParameterEncoding {
@@ -129,12 +110,12 @@ public struct SetFieldsEndpoint: Endpoint {
     }
     
     public let book: Book
-    public let change: Change
+    public let changes: Set<Change>
     public let loadedBooks: [Book]
     
-    public init(book: Book, change: Change, loadedBooks: [Book] = []) {
+    public init(book: Book, changes: Set<Change>, loadedBooks: [Book] = []) {
         self.book = book
-        self.change = change
+        self.changes = changes
         self.loadedBooks = loadedBooks
     }
     
