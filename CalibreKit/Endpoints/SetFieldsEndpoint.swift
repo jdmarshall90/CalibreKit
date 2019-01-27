@@ -33,16 +33,9 @@ public struct SetFieldsEndpoint: Endpoint {
     
     public enum Change: Hashable {
         public enum Property: Hashable {
-            // TODO: Need to figure this one out
-            //                "title_sort": nil, // all of these appear to be nillable, but I can't get this field to work ... ? come back to it
-            
-            // TODO: Need to figure this one out
-            //                "author_sort": ["something": "bob"], // can't get this one working? come back to it
-            
-            // TODO: need to be able to set the cover image
-            
             case authors([Book.Author])
             case comments(String?)
+            case cover(Data?)
             case identifiers([Book.Identifier])
             case languages([Book.Language])
             case publishedDate(Date?)
@@ -63,6 +56,8 @@ public struct SetFieldsEndpoint: Endpoint {
                     return ["authors": authors.map { $0.name }]
                 case .comments(let comments):
                     return ["comments": comments as Any]
+                case .cover(let coverData):
+                    return ["cover": coverData?.base64EncodedString() as Any]
                 case .identifiers(let identifiers):
                     let identifiersJSON = identifiers.reduce(
                         into: [:], { result, next in
@@ -84,7 +79,10 @@ public struct SetFieldsEndpoint: Endpoint {
                 case .tags(let tags):
                     return ["tags": tags]
                 case .title(let title):
-                    return ["title": title?.name as Any]
+                    return [
+                        "title": title?.name as Any,
+                        "sort": title?.sort as Any
+                    ]
                 }
             }
         }
@@ -156,18 +154,17 @@ public struct SetFieldsEndpoint: Endpoint {
         
         let authors = bookMetadata["authors"] as? [String] ?? []
         
-        // TODO: Come back to this after you have implemented authorSort being an input to this endpoint
+        let authorSort = bookMetadata["author_sort"] as? String
         // comes back as either "Unknown" or array separated by &
-        //        let authorSort = bookMetadata["author_sort"] as! String
-        //        let authorSortArray = authorSort.split(separator: "&")
+        let authorSortArray = authorSort?.split(separator: "&").map { $0.trimmingCharacters(in: .whitespaces) } ?? []
+        
         modifiedResponseJSON["author_sort"] = nil
-        modifiedResponseJSON["author_sort_map"] = Dictionary(uniqueKeysWithValues: zip(authors, authors))
+        modifiedResponseJSON["author_sort_map"] = Dictionary(uniqueKeysWithValues: zip(authors, authorSortArray))
         
         modifiedResponseJSON["cover"] = book.cover.relativePath
         modifiedResponseJSON["thumbnail"] = book.thumbnail.relativePath
         
         let titleSort = bookMetadata["sort"]
-        // TODO: Make sure this still works after you have implemented titleSort being an input to this endpoint
         modifiedResponseJSON["title_sort"] = titleSort
         
         if let rating = modifiedResponseJSON["rating"] as? Int {
