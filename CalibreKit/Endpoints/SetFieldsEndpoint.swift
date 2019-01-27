@@ -149,28 +149,27 @@ public struct SetFieldsEndpoint: Endpoint {
         let bookMetadata = bookDictionary.values.first as? [String: Any] ?? [:]
         var modifiedResponseJSON = bookMetadata
         
-        // TODO: Use the coding keys directly, stop hardcoding the string keys
-        modifiedResponseJSON["application_id"] = bookID
+        modifiedResponseJSON[Book.CodingKeys.id.rawValue] = bookID
         
-        let authors = bookMetadata["authors"] as? [String] ?? []
+        let authors = bookMetadata[Book.CodingKeys.authors.rawValue] as? [String] ?? []
         
         let authorSort = bookMetadata["author_sort"] as? String
         // comes back as either "Unknown" or array separated by &
         let authorSortArray = authorSort?.split(separator: "&").map { $0.trimmingCharacters(in: .whitespaces) } ?? []
         
         modifiedResponseJSON["author_sort"] = nil
-        modifiedResponseJSON["author_sort_map"] = Dictionary(uniqueKeysWithValues: zip(authors, authorSortArray))
+        modifiedResponseJSON[Book.CodingKeys.authorSortMap.rawValue] = Dictionary(uniqueKeysWithValues: zip(authors, authorSortArray))
         
-        modifiedResponseJSON["cover"] = book.cover.relativePath
-        modifiedResponseJSON["thumbnail"] = book.thumbnail.relativePath
+        modifiedResponseJSON[Book.CodingKeys.cover.rawValue] = book.cover.relativePath
+        modifiedResponseJSON[Book.CodingKeys.thumbnail.rawValue] = book.thumbnail.relativePath
         
         let titleSort = bookMetadata["sort"]
-        modifiedResponseJSON["title_sort"] = titleSort
+        modifiedResponseJSON[Book.CodingKeys.titleSort.rawValue] = titleSort
         
-        if let rating = modifiedResponseJSON["rating"] as? Int {
+        if let rating = modifiedResponseJSON[Book.CodingKeys.rating.rawValue] as? Int {
             // Just like changing the rating seems to actually set this to half of what you send in, this
             // particular response is double what the actual rating is.
-            modifiedResponseJSON["rating"] = rating / 2
+            modifiedResponseJSON[Book.CodingKeys.rating.rawValue] = rating / 2
         }
         
         let modifiedResponseData = try JSONSerialization.data(withJSONObject: modifiedResponseJSON)
