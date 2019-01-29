@@ -295,7 +295,15 @@ private extension KeyedDecodingContainer where Key == Book.CodingKeys {
     }()
     
     func decodeDate(forKey key: Key) throws -> Date? {
-        guard let rawDate = try decodeIfPresent(String.self, forKey: key) else { return nil }
+        guard var rawDate = try decodeIfPresent(String.self, forKey: key) else { return nil }
+        // Most dates are coming back looking like: "2018-11-21T16:27:09+00:00".
+        // Some, however, look like: "2019-01-29T03:35:00.046910+00:00".
+        // It is easier to just strip out the fractional seconds than to create
+        // a new date formatter.
+        if let indexOfPeriod = rawDate.index(of: "."),
+            let indexOfPlus = rawDate.index(of: "+") {
+            rawDate.removeSubrange(indexOfPeriod..<indexOfPlus)
+        }
         let date = KeyedDecodingContainer<K>.dateFormatter.date(from: rawDate)
         return date
     }
