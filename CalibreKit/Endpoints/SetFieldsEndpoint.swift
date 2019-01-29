@@ -144,6 +144,18 @@ public struct SetFieldsEndpoint: Endpoint {
         modifiedResponseJSON[Book.CodingKeys.cover.rawValue] = book.cover.relativePath
         modifiedResponseJSON[Book.CodingKeys.thumbnail.rawValue] = book.thumbnail.relativePath
         
+        if modifiedResponseJSON[Book.CodingKeys.identifiers.rawValue] == nil {
+            modifiedResponseJSON[Book.CodingKeys.identifiers.rawValue] = [:]
+        }
+        
+        if modifiedResponseJSON[Book.CodingKeys.languages.rawValue] == nil {
+            modifiedResponseJSON[Book.CodingKeys.languages.rawValue] = []
+        }
+        
+        if modifiedResponseJSON[Book.CodingKeys.tags.rawValue] == nil {
+            modifiedResponseJSON[Book.CodingKeys.tags.rawValue] = []
+        }
+        
         let titleSort = bookMetadata["sort"]
         modifiedResponseJSON[Book.CodingKeys.titleSort.rawValue] = titleSort
         
