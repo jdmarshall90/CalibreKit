@@ -23,7 +23,7 @@
 
 import Foundation
 
-public struct Book: ResponseSerializable {
+public struct Book: ResponseSerializable, Equatable {
     internal enum CodingKeys: String, CodingKey {
         // swiftlint:disable:next identifier_name
         case id = "application_id"
@@ -243,6 +243,10 @@ public struct Book: ResponseSerializable {
             self.name = name
             self.index = index
         }
+    }
+    
+    public static func ==(lhs: Book, rhs: Book) -> Bool {
+        return lhs.id == rhs.id
     }
     
     public init(from decoder: Decoder) throws {
