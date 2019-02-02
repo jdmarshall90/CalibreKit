@@ -157,17 +157,25 @@ public struct Book: ResponseSerializable, Equatable {
         }
         
         public init(displayValue: String) {
-            switch displayValue {
-            case Language.english.serverValue:
+            switch displayValue.lowercased().trimmingCharacters(in: .whitespaces) {
+            case Language.english.serverValue?.lowercased(),
+                 Language.english.displayValue.lowercased():
                 self = .english
-            case Language.latin.serverValue:
+                
+            case Language.latin.serverValue?.lowercased(),
+                 Language.latin.displayValue.lowercased():
                 self = .latin
-            case Language.russian.serverValue:
+                
+            case Language.russian.serverValue?.lowercased(),
+                 Language.russian.displayValue.lowercased():
                 self = .russian
-            case Language.spanish.serverValue:
+                
+            case Language.spanish.serverValue?.lowercased(),
+                 Language.spanish.displayValue.lowercased():
                 self = .spanish
+                
             default:
-                self = .other(displayValue)
+                self = .other(displayValue.trimmingCharacters(in: .whitespaces))
             }
         }
         
