@@ -29,6 +29,10 @@ public struct Cache {
     public static func clear() {
         // Long term, this caching will likely need to be ripped out and made scalable.
         // Good enough for now, though.
-        ImageEndpoint.Cache.cache.removeAll()
+        ImageEndpoint.Cache.clearAll()
+    }
+    
+    public static func clear(for book: Book) {
+        ImageEndpoint.Cache.clear(for: book)
     }
 }

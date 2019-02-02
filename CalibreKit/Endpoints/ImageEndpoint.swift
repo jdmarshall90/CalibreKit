@@ -34,7 +34,16 @@ public struct ImageEndpoint: Endpoint, ResponseSerializable {
         // Good enough for now, though.
         private init() {}
         
-        internal static var cache: [String: DataResponse<Image>] = [:]
+        fileprivate static var cache: [String: DataResponse<Image>] = [:]
+        
+        internal static func clearAll() {
+            cache.removeAll()
+        }
+        
+        internal static func clear(for book: Book) {
+            cache[book.cover.relativePath] = nil
+            cache[book.thumbnail.relativePath] = nil
+        }
     }
     
     public init(from decoder: Decoder) throws {
