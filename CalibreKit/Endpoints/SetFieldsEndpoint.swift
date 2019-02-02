@@ -141,8 +141,12 @@ public struct SetFieldsEndpoint: Endpoint {
         modifiedResponseJSON["author_sort"] = nil
         modifiedResponseJSON[Book.CodingKeys.authorSortMap.rawValue] = Dictionary(uniqueKeysWithValues: zip(authors, authorSortArray))
         
-        modifiedResponseJSON[Book.CodingKeys.cover.rawValue] = book.cover.relativePath
-        modifiedResponseJSON[Book.CodingKeys.thumbnail.rawValue] = book.thumbnail.relativePath
+        let coverLibraryName = book.cover.relativePath.split(separator: "/").last ?? ""
+        let thumbnailLibraryName = book.thumbnail.relativePath.split(separator: "/").last ?? ""
+        assert(coverLibraryName == thumbnailLibraryName)
+        
+        modifiedResponseJSON[Book.CodingKeys.cover.rawValue] = "/get/cover/\(bookID ?? 0)/\(thumbnailLibraryName)"
+        modifiedResponseJSON[Book.CodingKeys.thumbnail.rawValue] = "/get/thumb/\(bookID ?? 0)/\(thumbnailLibraryName)"
         
         if modifiedResponseJSON[Book.CodingKeys.identifiers.rawValue] == nil {
             modifiedResponseJSON[Book.CodingKeys.identifiers.rawValue] = [:]
