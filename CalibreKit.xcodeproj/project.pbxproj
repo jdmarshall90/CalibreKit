@@ -19,6 +19,8 @@
 		D048718F216A97C30085D22C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048718E216A97C30085D22C /* Endpoint.swift */; };
 		D049687821D01AF600BD24C4 /* AlamofireNetworkActivityIndicator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D049687621D01AF600BD24C4 /* AlamofireNetworkActivityIndicator.framework */; };
 		D049687921D01AF600BD24C4 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D049687721D01AF600BD24C4 /* Alamofire.framework */; };
+		D06AF586222A252500DFDFF1 /* BookDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06AF585222A252500DFDFF1 /* BookDownload.swift */; };
+		D06AF588222A257000DFDFF1 /* BookDownloadEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06AF587222A257000DFDFF1 /* BookDownloadEndpoint.swift */; };
 		D07C4E0021E08D3400E1B470 /* ServerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C4DFF21E08D3400E1B470 /* ServerConfiguration.swift */; };
 		D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */; };
 		D0B475FD216C3AC4008FDA50 /* DataRequest+Calibre.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */; };
@@ -61,6 +63,8 @@
 		D049687721D01AF600BD24C4 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		D0518E7B21797CA20087A000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		D0518E7C21797CA20087A000 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		D06AF585222A252500DFDFF1 /* BookDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BookDownload.swift; path = ../../../CalibreKit/CalibreKit/Responses/BookDownload.swift; sourceTree = "<group>"; };
+		D06AF587222A257000DFDFF1 /* BookDownloadEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BookDownloadEndpoint.swift; path = ../../../CalibreKit/CalibreKit/Endpoints/BookDownloadEndpoint.swift; sourceTree = "<group>"; };
 		D07C4DFF21E08D3400E1B470 /* ServerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ServerConfiguration.swift; path = ../../CalibreKit/CalibreKit/ServerConfiguration.swift; sourceTree = "<group>"; };
 		D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializable.swift; sourceTree = "<group>"; };
 		D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRequest+Calibre.swift"; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 			children = (
 				D048718E216A97C30085D22C /* Endpoint.swift */,
 				D0D0F3522189266800B6A598 /* BookEndpoint.swift */,
+				D06AF587222A257000DFDFF1 /* BookDownloadEndpoint.swift */,
 				D0B475FE216C3AF8008FDA50 /* BooksEndpoint.swift */,
 				D02F75D4216D96410040EDE5 /* CoverEndpoint.swift */,
 				D02F75DA216D97000040EDE5 /* ImageEndpoint.swift */,
@@ -171,6 +176,7 @@
 				D0B475FA216C3AA6008FDA50 /* ResponseSerializable.swift */,
 				D0B475FC216C3AC4008FDA50 /* DataRequest+Calibre.swift */,
 				D0B47600216C3B37008FDA50 /* Book.swift */,
+				D06AF585222A252500DFDFF1 /* BookDownload.swift */,
 				D02F75D8216D96570040EDE5 /* Image.swift */,
 				D0E09B002189432F0042C12D /* Search.swift */,
 			);
@@ -314,6 +320,7 @@
 				D0D0F355218927EE00B6A598 /* SearchEndpoint.swift in Sources */,
 				D0B47605216C3B6F008FDA50 /* CalibreError.swift in Sources */,
 				D016508B21F6BD6400C2326D /* SetFieldsEndpoint.swift in Sources */,
+				D06AF588222A257000DFDFF1 /* BookDownloadEndpoint.swift in Sources */,
 				D0B475FB216C3AA6008FDA50 /* ResponseSerializable.swift in Sources */,
 				D0B475FF216C3AF8008FDA50 /* BooksEndpoint.swift in Sources */,
 				D02F75D7216D964E0040EDE5 /* ThumbnailEndpoint.swift in Sources */,
@@ -321,6 +328,7 @@
 				D0FD619F217EAF70004099FA /* Cache.swift in Sources */,
 				D02F75DB216D97000040EDE5 /* ImageEndpoint.swift in Sources */,
 				D048718F216A97C30085D22C /* Endpoint.swift in Sources */,
+				D06AF586222A252500DFDFF1 /* BookDownload.swift in Sources */,
 				D0B47601216C3B37008FDA50 /* Book.swift in Sources */,
 				D02F75D5216D96410040EDE5 /* CoverEndpoint.swift in Sources */,
 				D0B475FD216C3AC4008FDA50 /* DataRequest+Calibre.swift in Sources */,

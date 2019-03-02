@@ -30,9 +30,11 @@ public struct Book: ResponseSerializable, Equatable {
         case addedOn = "timestamp"
         case comments
         case cover
+        case formats
         case identifiers
         case languages
         case lastModified = "last_modified"
+        case mainFormat = "main_format"
         case tags
         case thumbnail
         case title
@@ -60,14 +62,83 @@ public struct Book: ResponseSerializable, Equatable {
     public let publishedDate: Date?
     public let rating: Rating
     public let series: Series?
+    public let formats: [Format]
+    public let mainFormat: BookDownloadEndpoint?
     
-    public struct Author: Hashable {
+    public struct Author: Hashable, Codable {
         public let name: String
         public let sort: String
         
         public init(name: String, sort: String) {
             self.name = name
             self.sort = sort
+        }
+    }
+    
+    public enum Format: Codable {
+        case acsm
+        case azw
+        case azw3
+        case epub
+        case pdf
+        case other(String)
+        
+        private var serverValue: String {
+            switch self {
+            case .acsm:
+                return "acsm"
+            case .azw:
+                return "azw"
+            case .azw3:
+                return "azw3"
+            case .epub:
+                return "epub"
+            case .pdf:
+                return "pdf"
+            case .other(let value):
+                return value
+            }
+        }
+        
+        public var displayValue: String {
+            return serverValue.uppercased()
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let rawValue = try decoder.singleValueContainer().decode(String.self)
+            self.init(serverValue: rawValue)
+        }
+        
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode(serverValue)
+        }
+        
+        internal init(serverValue: String) {
+            switch serverValue.lowercased().trimmingCharacters(in: .whitespaces) {
+            case Format.acsm.serverValue.lowercased(),
+                 Format.acsm.displayValue.lowercased():
+                self = .acsm
+
+            case Format.azw.serverValue.lowercased(),
+                 Format.azw.displayValue.lowercased():
+                self = .azw
+
+            case Format.azw3.serverValue.lowercased(),
+                 Format.azw3.displayValue.lowercased():
+                self = .azw3
+
+            case Format.epub.serverValue.lowercased(),
+                 Format.epub.displayValue.lowercased():
+                self = .epub
+
+            case Format.pdf.serverValue.lowercased(),
+                 Format.pdf.displayValue.lowercased():
+                self = .pdf
+
+            default:
+                self = .other(serverValue.trimmingCharacters(in: .whitespaces))
+            }
         }
     }
     
@@ -185,7 +256,7 @@ public struct Book: ResponseSerializable, Equatable {
         }
     }
     
-    public struct Title: Hashable {
+    public struct Title: Hashable, Codable {
         public let name: String
         public let sort: String
         
@@ -230,7 +301,7 @@ public struct Book: ResponseSerializable, Equatable {
         }
     }
     
-    public struct Series: Hashable {
+    public struct Series: Hashable, Codable {
         private static let seriesIndexFormatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.minimumIntegerDigits = 1
@@ -269,6 +340,18 @@ public struct Book: ResponseSerializable, Equatable {
         
         self.comments = try container.decodeIfPresent(String.self, forKey: .comments)
         self.cover = try container.decode(CoverEndpoint.self, forKey: .cover)
+        
+        self.formats = try container.decode([Format].self, forKey: .formats)
+        
+        if let mainFormat = try container.decodeIfPresent(Dictionary<String, String>.self, forKey: .mainFormat),
+            let mainFormatURL = mainFormat.values.first,
+            // this will try to parse something like: "/get/epub/BOOK_ID/LIBRARY_NAME"
+            let formatString = mainFormatURL.split(separator: "/").dropFirst().first {
+            let format = Format(serverValue: String(formatString))
+            self.mainFormat = BookDownloadEndpoint(relativePath: mainFormatURL, format: format)
+        } else {
+            self.mainFormat = nil
+        }
         
         let rawIdentifiers = try container.decode([String: String].self, forKey: .identifiers)
         self.identifiers = rawIdentifiers.map { Identifier(source: $0.key, uniqueID: $0.value) }
