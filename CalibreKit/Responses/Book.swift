@@ -266,7 +266,7 @@ public struct Book: ResponseSerializable, Equatable {
         }
     }
     
-    public enum Rating: Int, ResponseSerializable, CaseIterable, Hashable {
+    public enum Rating: Int, ResponseSerializable, CaseIterable, Hashable, Encodable {
         case unrated
         case oneStar
         case twoStars
