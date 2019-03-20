@@ -3,7 +3,7 @@
 //  CalibreKit
 //
 //  Created by Justin Marshall on 1/21/19.
-//  
+//
 //  CalibreKit is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -68,7 +68,14 @@ public struct SetFieldsEndpoint: Endpoint {
                 return ["languages": languages.map { $0.displayValue }]
             case .publishedDate(let date):
                 guard let date = date else { return nil }
-                return ["pubdate": Change.dateFormatter.string(from: date)]
+                var pubdate = Change.dateFormatter.string(from: date)
+                if pubdate.count == 28 {
+                    // Total hack (to fix issue where dates centuries in the past could fail), but
+                    // I'm having a hard time finding the right configuration on the ISO8601DateFormatter,
+                    // so this is a workaround.
+                    pubdate = String(pubdate.dropLast(3))
+                }
+                return ["pubdate": pubdate]
             case .rating(let rating):
                 // this seems to actually set this to half of what you send in
                 return ["rating": rating.rawValue * 2]
