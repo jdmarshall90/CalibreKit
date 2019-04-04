@@ -25,6 +25,8 @@ import Alamofire
 
 public struct BookEndpoint: Endpoint, ResponseSerializable {
     private struct BookIDParameterEncoding: ParameterEncoding {
+        // swiftlint:disable lower_acl_than_parent
+        // swiftlint:disable explicit_acl
         func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
             var urlRequest = try urlRequest.asURLRequest()
             
@@ -40,6 +42,8 @@ public struct BookEndpoint: Endpoint, ResponseSerializable {
             
             return urlRequest
         }
+        // swiftlint:enable lower_acl_than_parent
+        // swiftlint:enable explicit_acl
     }
     
     public typealias ParsedResponse = Book
