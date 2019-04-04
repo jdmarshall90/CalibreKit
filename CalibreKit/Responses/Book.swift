@@ -395,8 +395,8 @@ private extension KeyedDecodingContainer where Key == Book.CodingKeys {
         // Some, however, look like: "2019-01-29T03:35:00.046910+00:00".
         // It is easier to just strip out the fractional seconds than to create
         // a new date formatter.
-        if let indexOfPeriod = rawDate.index(of: "."),
-            let indexOfPlus = rawDate.index(of: "+") {
+        if let indexOfPeriod = rawDate.firstIndex(of: "."),
+            let indexOfPlus = rawDate.firstIndex(of: "+") {
             rawDate.removeSubrange(indexOfPeriod..<indexOfPlus)
         }
         let date = KeyedDecodingContainer<K>.dateFormatter.date(from: rawDate)

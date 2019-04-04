@@ -27,7 +27,8 @@ import Foundation
 // modified from: https://github.com/Alamofire/Alamofire/blob/master/Documentation/AdvancedUsage.md#generic-response-object-serialization
 internal extension DataRequest {
     @discardableResult
-    internal func responseCalibre<T: ResponseSerializable>(queue: DispatchQueue? = nil, transform: @escaping ((Data) throws -> T), completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
+    // swiftlint:disable:next explicit_acl
+    func responseCalibre<T: ResponseSerializable>(queue: DispatchQueue? = nil, transform: @escaping ((Data) throws -> T), completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
         let responseSerializer = DataResponseSerializer<T> { _, _, data, error in
             // swiftlint:disable:next force_unwrapping
             guard error == nil else { return .failure(error!) }

@@ -38,11 +38,11 @@ public protocol Endpoint {
 }
 
 public extension Endpoint {
-    public var encoding: ParameterEncoding {
+    var encoding: ParameterEncoding {
         return URLEncoding.default
     }
     
-    public func absoluteURL() throws -> URL {
+    func absoluteURL() throws -> URL {
         guard let baseURL = CalibreKitConfiguration.configuration?.url else {
             throw CalibreError.message("Go into settings and set your Calibre© Content Server configuration")
         }
@@ -50,7 +50,7 @@ public extension Endpoint {
         return URL(string: relativePath, relativeTo: baseURL)!
     }
     
-    public func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void) {
+    func hitService(completion: @escaping (DataResponse<ParsedResponse>) -> Void) {
         do {
             try request(try absoluteURL(), method: method, parameters: parameters, encoding: encoding).responseCalibre(transform: transform, completionHandler: completion)
         } catch {
@@ -58,7 +58,7 @@ public extension Endpoint {
         }
     }
     
-    public func transform(responseData: Data) throws -> ParsedResponse {
+    func transform(responseData: Data) throws -> ParsedResponse {
         let parsedResponse = try JSONDecoder().decode(ParsedResponse.self, from: responseData)
         return parsedResponse
     }
