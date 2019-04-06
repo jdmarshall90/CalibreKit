@@ -83,7 +83,7 @@ public struct Book: ResponseSerializable, Equatable {
         case pdf
         case other(String)
         
-        private var serverValue: String {
+        internal var serverValue: String {
             switch self {
             case .acsm:
                 return "acsm"
