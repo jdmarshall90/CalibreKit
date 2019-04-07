@@ -176,7 +176,12 @@ public struct SetFieldsEndpoint: Endpoint {
             modifiedResponseJSON[Book.CodingKeys.rating.rawValue] = rating / 2
         }
         
-        modifiedResponseJSON[Book.CodingKeys.mainFormat.rawValue] = [book.mainFormat?.format.serverValue: book.mainFormat?.relativePath]
+        if let formats = modifiedResponseJSON[Book.CodingKeys.formats.rawValue] as? [String],
+            let mainFormat = formats.first?.lowercased(),
+            let bookID = bookID {
+            let libraryName = coverLibraryName
+            modifiedResponseJSON[Book.CodingKeys.mainFormat.rawValue] = [mainFormat: "/get/\(mainFormat)/\(bookID)/\(libraryName)"]
+        }
         
         let modifiedResponseData = try JSONSerialization.data(withJSONObject: modifiedResponseJSON)
         let parsedResponse = try JSONDecoder().decode(Book.self, from: modifiedResponseData)
