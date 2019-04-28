@@ -119,23 +119,23 @@ public struct Book: ResponseSerializable, Equatable {
             case Format.acsm.serverValue.lowercased(),
                  Format.acsm.displayValue.lowercased():
                 self = .acsm
-
+                
             case Format.azw.serverValue.lowercased(),
                  Format.azw.displayValue.lowercased():
                 self = .azw
-
+                
             case Format.azw3.serverValue.lowercased(),
                  Format.azw3.displayValue.lowercased():
                 self = .azw3
-
+                
             case Format.epub.serverValue.lowercased(),
                  Format.epub.displayValue.lowercased():
                 self = .epub
-
+                
             case Format.pdf.serverValue.lowercased(),
                  Format.pdf.displayValue.lowercased():
                 self = .pdf
-
+                
             default:
                 self = .other(serverValue.trimmingCharacters(in: .whitespaces))
             }
@@ -195,6 +195,7 @@ public struct Book: ResponseSerializable, Equatable {
         case latin
         case russian
         case spanish
+        case german
         case other(String)
         
         private var serverValue: String? {
@@ -207,12 +208,14 @@ public struct Book: ResponseSerializable, Equatable {
                 return "rus"
             case .spanish:
                 return "spa"
+            case .german:
+                return "deu"
             case .other:
                 return nil
             }
         }
         
-        public var displayValue: String {
+        public var englishDisplayValue: String {
             switch self {
             case .english:
                 return "English"
@@ -222,6 +225,25 @@ public struct Book: ResponseSerializable, Equatable {
                 return "Russian"
             case .spanish:
                 return "Spanish"
+            case .german:
+                return "German"
+            case .other(let language):
+                return language
+            }
+        }
+        
+        public var displayValue: String {
+            switch self {
+            case .english:
+                return "English"
+            case .latin:
+                return "Latina"
+            case .russian:
+                return "Русский"
+            case .spanish:
+                return "Español"
+            case .german:
+                return "Deutsche"
             case .other(let language):
                 return language
             }
@@ -230,20 +252,29 @@ public struct Book: ResponseSerializable, Equatable {
         public init(displayValue: String) {
             switch displayValue.lowercased().trimmingCharacters(in: .whitespaces) {
             case Language.english.serverValue?.lowercased(),
-                 Language.english.displayValue.lowercased():
+                 Language.english.displayValue.lowercased(),
+                 Language.english.englishDisplayValue.lowercased():
                 self = .english
                 
             case Language.latin.serverValue?.lowercased(),
-                 Language.latin.displayValue.lowercased():
+                 Language.latin.displayValue.lowercased(),
+                 Language.latin.englishDisplayValue.lowercased():
                 self = .latin
                 
             case Language.russian.serverValue?.lowercased(),
-                 Language.russian.displayValue.lowercased():
+                 Language.russian.displayValue.lowercased(),
+                 Language.russian.englishDisplayValue.lowercased():
                 self = .russian
                 
             case Language.spanish.serverValue?.lowercased(),
-                 Language.spanish.displayValue.lowercased():
+                 Language.spanish.displayValue.lowercased(),
+                 Language.spanish.englishDisplayValue.lowercased():
                 self = .spanish
+                
+            case Language.german.serverValue?.lowercased(),
+                 Language.german.displayValue.lowercased(),
+                 Language.german.englishDisplayValue.lowercased():
+                self = .german
                 
             default:
                 self = .other(displayValue.trimmingCharacters(in: .whitespaces))
