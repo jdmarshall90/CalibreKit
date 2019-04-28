@@ -293,8 +293,13 @@ public struct Book: ResponseSerializable, Equatable {
         
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
-            let rawRating = try container.decode(Int.self)
-            guard let rating = Rating(rawValue: rawRating) else {
+            let rawRating = try container.decode(Double.self)
+            
+            // Sometimes books come back with fraction ratings (i.e., 3.5)... but even then,
+            // the calibre web and native apps UI just seem to round down. So I'm matching
+            // that behavior here.
+            let integerRawRating = Int(rawRating)
+            guard let rating = Rating(rawValue: integerRawRating) else {
                 throw CalibreError.message("Expected rating of 0-5, but got \(rawRating).")
             }
             self = rating
