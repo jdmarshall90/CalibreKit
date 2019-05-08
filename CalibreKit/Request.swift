@@ -24,6 +24,8 @@
 import Alamofire
 import Foundation
 
+private enum Request { /* silence a swiftlint warning, the standard swiftlint:disable is not working */ }
+
 @discardableResult
 internal func request(
     _ url: @autoclosure () throws -> URL,
@@ -32,7 +34,7 @@ internal func request(
     encoding: ParameterEncoding = URLEncoding.default,
     headers: HTTPHeaders? = nil) rethrows
     -> DataRequest {
-        let theRequest = SessionManager.default.request(
+        let theRequest = sharedManager.request(
             try url(),
             method: method,
             parameters: parameters,
@@ -45,3 +47,14 @@ internal func request(
         }
         return theRequest
 }
+
+private let sharedManager: SessionManager = {
+    class SelfSignedServerTrustPolicyManager: ServerTrustPolicyManager {
+        override open func serverTrustPolicy(forHost host: String) -> ServerTrustPolicy? {
+            return ServerTrustPolicy.disableEvaluation
+        }
+    }
+    
+    let trustPolicies = SelfSignedServerTrustPolicyManager(policies: [:])
+    return SessionManager(serverTrustPolicyManager: trustPolicies)
+}()
