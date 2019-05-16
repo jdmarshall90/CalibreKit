@@ -30,7 +30,7 @@ public struct Image: ResponseSerializable {
         fatalError("unused, but required by the compiler")
     }
     
-    internal init(image: UIImage) {
+    public init(image: UIImage) {
         self.image = image
     }
 }

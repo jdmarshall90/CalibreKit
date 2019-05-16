@@ -32,7 +32,7 @@ public struct BookDownload: ResponseSerializable, Encodable {
     public let file: Data
     public let format: Book.Format
     
-    internal init(format: Book.Format, file: Data) {
+    public init(format: Book.Format, file: Data) {
         self.format = format
         self.file = file
     }
