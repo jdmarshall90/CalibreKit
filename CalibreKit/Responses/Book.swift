@@ -114,7 +114,7 @@ public struct Book: ResponseSerializable, Equatable {
             try container.encode(serverValue)
         }
         
-        internal init(serverValue: String) {
+        public init(serverValue: String) {
             switch serverValue.lowercased().trimmingCharacters(in: .whitespaces) {
             case Format.acsm.serverValue.lowercased(),
                  Format.acsm.displayValue.lowercased():
@@ -325,7 +325,10 @@ public struct Book: ResponseSerializable, Equatable {
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
             let rawRating = try container.decode(Double.self)
-            
+            try self.init(rawRating: rawRating)
+        }
+        
+        public init(rawRating: Double) throws {
             // Sometimes books come back with fraction ratings (i.e., 3.5)... but even then,
             // the calibre web and native apps UI just seem to round down. So I'm matching
             // that behavior here.
