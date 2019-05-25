@@ -75,7 +75,7 @@ public struct Book: ResponseSerializable, Equatable {
         }
     }
     
-    public enum Format: Codable {
+    public enum Format: Codable, Equatable {
         case acsm
         case azw
         case azw3
