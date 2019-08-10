@@ -52,7 +52,7 @@ public struct BookEndpoint: Endpoint, ResponseSerializable {
         return .get
     }
     
-    public let relativePath = "/ajax/book/"
+    public let relativePath = "ajax/book/"
     
     public var encoding: ParameterEncoding {
         return BookIDParameterEncoding()

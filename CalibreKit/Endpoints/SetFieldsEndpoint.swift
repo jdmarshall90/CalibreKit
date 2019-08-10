@@ -28,7 +28,7 @@ public struct SetFieldsEndpoint: Endpoint {
     public let method: HTTPMethod = .post
     
     public var relativePath: String {
-        return "/cdb/set-fields/\(book.id)/"
+        return "cdb/set-fields/\(book.id)/"
     }
     
     public enum Change: Hashable {
@@ -152,8 +152,8 @@ public struct SetFieldsEndpoint: Endpoint {
         let thumbnailLibraryName = book.thumbnail.relativePath.split(separator: "/").last ?? ""
         assert(coverLibraryName == thumbnailLibraryName)
         
-        modifiedResponseJSON[Book.CodingKeys.cover.rawValue] = "/get/cover/\(bookID ?? 0)/\(thumbnailLibraryName)"
-        modifiedResponseJSON[Book.CodingKeys.thumbnail.rawValue] = "/get/thumb/\(bookID ?? 0)/\(thumbnailLibraryName)"
+        modifiedResponseJSON[Book.CodingKeys.cover.rawValue] = "get/cover/\(bookID ?? 0)/\(thumbnailLibraryName)"
+        modifiedResponseJSON[Book.CodingKeys.thumbnail.rawValue] = "get/thumb/\(bookID ?? 0)/\(thumbnailLibraryName)"
         
         if modifiedResponseJSON[Book.CodingKeys.identifiers.rawValue] == nil {
             modifiedResponseJSON[Book.CodingKeys.identifiers.rawValue] = [:]
@@ -180,7 +180,7 @@ public struct SetFieldsEndpoint: Endpoint {
             let mainFormat = formats.first?.lowercased(),
             let bookID = bookID {
             let libraryName = coverLibraryName
-            modifiedResponseJSON[Book.CodingKeys.mainFormat.rawValue] = [mainFormat: "/get/\(mainFormat)/\(bookID)/\(libraryName)"]
+            modifiedResponseJSON[Book.CodingKeys.mainFormat.rawValue] = [mainFormat: "get/\(mainFormat)/\(bookID)/\(libraryName)"]
         }
         
         let modifiedResponseData = try JSONSerialization.data(withJSONObject: modifiedResponseJSON)
