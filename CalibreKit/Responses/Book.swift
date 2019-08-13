@@ -384,8 +384,11 @@ public struct Book: ResponseSerializable, Equatable {
         
         if let mainFormat = try container.decodeIfPresent(Dictionary<String, String>.self, forKey: .mainFormat),
             let mainFormatURL = mainFormat.values.first,
-            // this will try to parse something like: "/get/epub/BOOK_ID/LIBRARY_NAME"
-            let formatString = mainFormatURL.split(separator: "/").dropFirst().first {
+            // this will try to parse something like one of these:
+            // "/get/epub/BOOK_ID/LIBRARY_NAME"
+            // "/prefix/get/epub/BOOK_ID/LIBRARY_NAME"
+            // "/prefix/secondaryprefix/get/epub/BOOK_ID/LIBRARY_NAME"
+            let formatString = mainFormatURL.split(separator: "/").reversed().dropFirst().dropFirst().first {
             let format = Format(serverValue: String(formatString))
             self.mainFormat = BookDownloadEndpoint(relativePath: mainFormatURL, format: format)
         } else {
